@@ -1,2 +1,6 @@
+node_modules
+*.log
 data
-lib
+lib/*
+!lib/jquery.sparql.js
+!lib/urlEncode.js
