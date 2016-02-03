@@ -3,4 +3,5 @@ node_modules
 data
 lib/*
 !lib/jquery.sparql.js
-!lib/urlEncode.js
+!lib/urlEncode.js.DS_Store
+.DS_Store
