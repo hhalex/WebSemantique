@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Projet de Web Sémantique</title>
+    <meta charset="utf-8">
+    <script language="Javascript" src="lib/jquery.js"></script>
+
+    <script language="Javascript" src="lib/urlEncode.js"></script>
+    <script language="Javascript" src="lib/jquery.sparql.js"></script>
+    <script language="Javascript" src="lib/jquery-rdf.js"></script>
+    <script language="Javascript" src="jquery.awesome.min.js"></script>
+
+    <script language="Javascript" src="lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="lib/bootstrap-3.3.6-dist/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
+
+    <style type="text/css">
+      .wordcloud {
+        border: 1px solid #036;
+        height: 7in;
+        margin: 0.5in auto;
+        padding: 0;
+        page-break-after: always;
+        page-break-inside: avoid;
+        width: 7in;
+      }
+    </style>
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+  </head>
+
+  <body>
+
+    <script language="JavaScript" src="test.js"></script>
+
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <!--<li role="presentation"><a href="https://github.com/hhalex/WebSemantique">Fork us on GitHub</a></li>-->
+          </ul>
+        </nav>
+        <a href="https://github.com/hhalex/WebSemantique"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+        <h3 class="text-muted">Rise Music</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h2>Please pick a music genre</h2>
+        <div id="results_requete">
+          <div id="wordcloud2" class="wordcloud">
+          </div>
+        </div>
+      </div>
+
+
+      <footer class="footer">
+        <p>&copy; CAREIL Alexandre; NICOLET Valentin; ROCHER Jean-Baptiste</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
