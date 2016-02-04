@@ -1,0 +1,8 @@
+  .lightbox { display: none; }
+  .fl-page h1,
+  .fl-page h3,
+  .fl-page h4 {
+    font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: 100;
+    letter-spacing: 1px;
+  }

@@ -23,18 +23,48 @@ $(document).ready(function () {
         //.select(["?genre"])
        // .where('?genre', 'a', 'onto:MusicGenre')
         .execute(function(res) {
-          $('#wordcloud2').empty();
+
+            var ul = $('<ul />');
+
             for (el in res)
             {
                 if ('genre' in res[el])
                 {
                   var dataweight = parseInt((parseInt(res[el].year)-1980)*(1+Math.random()));
-                  $('#wordcloud2')
-                  .append('<span data-weight="'+dataweight+'"><a href="' + res[el].genre.uri + '">'+res[el].label.replace('&', 'n')+'</a></span>');
+              /*    var element = $('<span />');
+                  element.attr('data-weight', dataweight);
+                //  var link = $('<a />', {'class': 'lightbox'});
+                  var link = $('<a />', {href: '#'+res[el].genre.uri, 'class': 'lightbox'});
+                  link.text(res[el].label.replace('&', 'n'));
+                  element.append(link);*/
+                  //
+                  //data-featherlight
+                  var li = $('<li />');
+                  var a = $('<a />', {href: res[el].genre.uri});
+                  a.text(res[el].label.replace('&', 'n'));
+                  a.data('featherlight', '#mylightbox');
+                  a.data('genre', res[el].label.replace('&', 'n'));
+                  a.data('uri', res[el].genre.uri);
+                  li.append(a);
+                  ul.append(li);
+
+                  //$('#wordcloud2').append(element);
                 }
             }
 
-              $("#wordcloud2").awesomeCloud({
+            $('#wordcloud2').empty().append(ul);
+
+            $('#wordcloud2 a').on('click', function() {
+                // TODO ajouter requête sparql
+                // TODO ajouter les albums issus de la requête sparql dans #mylightbox
+                // TODO permettre la sélection
+                // TODO retenir quelque part qu'est-ce-qui  a été sélectionné
+                $('#mylightbox').html('<strong>'+$(this).data('genre')+'</strong>');
+            });
+
+            $('#wordcloud2 a').featherlight($('#mylightbox'));
+
+            /*  $("#wordcloud2").awesomeCloud({
                 "size" : {
                   "grid" : 9,
                   "factor" : 1
@@ -45,8 +75,7 @@ $(document).ready(function () {
                 },
                 "font" : "'Times New Roman', Times, serif",
                 "shape" : "circle"
-              });
-
+              });*/
 
             return false;
         });

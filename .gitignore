@@ -5,4 +5,6 @@ lib/*
 !lib/jquery.sparql.js
 !lib/urlEncode.js
 !lib/jquery.awesome.min.js
+!lib/featherlight.css
+!lib/featherlight.js
 .DS_Store
