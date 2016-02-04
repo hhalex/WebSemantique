@@ -1,6 +1,7 @@
-<html>
-  <head >
 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
     <title>Projet de Web Sémantique</title>
     <meta charset="utf-8">
     <script language="Javascript" src="lib/jquery.js"></script>
@@ -8,7 +9,7 @@
     <script language="Javascript" src="lib/urlEncode.js"></script>
     <script language="Javascript" src="lib/jquery.sparql.js"></script>
     <script language="Javascript" src="lib/jquery-rdf.js"></script>
-    <script language="Javascript" src="jquery.awesome.min.js"></script>
+    <script language="Javascript" src="lib/jquery.awesome.min.js"></script>
 
     <script language="Javascript" src="lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
 
@@ -26,114 +27,47 @@
         width: 7in;
       }
     </style>
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 
   </head>
+
   <body>
 
     <script language="JavaScript" src="test.js"></script>
-    <script language="JavaScript">
 
-    </script>
-
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <a class="navbar-brand">WS: RiseMusic</a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Link</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <!--<li role="presentation"><a href="https://github.com/hhalex/WebSemantique">Fork us on GitHub</a></li>-->
           </ul>
-          <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="artiste">
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-          </form>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="checkbox">
-              <input type="checkbox" value="rock">
-              Rock
-            </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
+        </nav>
+        <a href="https://github.com/hhalex/WebSemantique"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
-    <div class="container col-md-offset-1 col-md-10" role="main">
-  <!--    <div class="col-md-offset-1 col-md-4">
-        <h3>Tri des données</h3>
+        <h3 class="text-muted">Rise Music</h3>
+      </div>
 
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="art">
-            Par artiste
-          </label>
-        </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="genre">
-            Par genre
-          </label>
-        </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="Par popularité">
-            Par popularité
-          </label>
-        </div>
-        <!-- Indicates a successful or positive action
-        <button type="button" class="btn btn-success" id="submit_request">Submit</button>
-      </div>-->
-
-      <!--<div class="col-md-6 col-md-offset-3">-->
+      <div class="jumbotron">
         <h2>Please pick a music genre</h2>
         <div id="results_requete">
           <div id="wordcloud2" class="wordcloud">
           </div>
         </div>
       </div>
-  <!--  </div>-->
-
-<!--    <div class="clearfix"></div>
-    <div class="container" id="results">
-      <ul id = "list">
-
-      </ul>
-    </div>-->
 
 
+      <footer class="footer">
+        <p>&copy; CAREIL Alexandre; NICOLET Valentin; ROCHER Jean-Baptiste</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
