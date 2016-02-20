@@ -1,0 +1,21 @@
+
+
+body {
+  background-color: grey;
+
+}
+
+
+.cover{
+  width: 300px;
+  height: 300px;
+  display:block;
+  margin:auto;
+}
+
+.album {
+  width: 330px;
+  height: 330px;
+  margin:10px;
+  display: inline-block;
+}
