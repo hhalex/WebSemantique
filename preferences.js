@@ -1,27 +1,25 @@
 $(document).ready(function(){
 
-  var cover = $(".cover");
 
-  cover.hover(function(){
+
+
+  function hoverCover(){
 
     $(this).parent().css("box-shadow", "10px 10px 5px #000000");
     $(this).css("width", "330px");
     $(this).css("height", "330px");
     $(".cover").css("filter", "graysaclae(100%)");
 
-  });
-  cover.mouseleave(function(){
+  }
+  function leaveCover(){
     $(this).parent().css("box-shadow", "0px 0px 0px #000000");
     $(this).css("width", "300px");
     $(this).css("height", "300px");
 
-  });
+  }
+  function open() {
 
 
-  //Lorsque vous cliquez sur un lien de la classe poplight et que le href commence par #
-  $(".album").click(function() {
-
-    $(this).not(".close").off();
     $(this).css({
 
       position: 'fixed',
@@ -29,7 +27,7 @@ $(document).ready(function(){
       color: 'white'
     });
 
-    $(".cover").off();
+
     $(this).find(".cover").css('display', 'inline-block');
 
     $(this).css('background-color', 'black');
@@ -59,7 +57,11 @@ $(document).ready(function(){
 
     },function(){
 
-      $(this).find(".hidden").css("display", "inline-block")
+      $(this).find(".hidden").not('h1').not('h2').css("display", "inline-block")
+      $(this).find('h2').css("display" ,"block");
+      $(this).find('h3').css("display", "block");
+      $(".cover").off();
+      $(".album").off();
     });
 
 
@@ -73,10 +75,12 @@ $(document).ready(function(){
   	$('#fade').css({'filter' : 'alpha(opacity=80)'}).fadeIn(function(){});
 
   	return false;
-  });
+  }
 
 
-
+  $(".album").on('click',open);
+  $(".cover").on('mouseover',hoverCover);
+  $(".cover").on('mouseout', leaveCover);
 
   $(".close").click(function() {
     console.log('test_close');
@@ -99,10 +103,15 @@ $(document).ready(function(){
     $(this).parent().find(".cover").animate({
 
       width:'300px',
-      height:'300px'
+      height:'300px',
+      marginTop: 'auto',
+      marginBottom: 'auto',
+      marginLeft: 'auto',
+      marginRight: 'auto'
 
 
-    });
+    },function(){});
+
     $(this).parent().animate({
 
 
@@ -110,16 +119,30 @@ $(document).ready(function(){
 
       width: '330px',
       height: '330px',
-      left:'0%',
-      top:'0%',
+      left:'',
+      top:'',
 
-      margin: '10px',
-      zIndex: '0'
+      marginTop: '10px',
+      marginBottom: '10px',
+      marginLeft: '10px',
+      marginRight: '10px',
 
-    });
-    $(".cover").on();
-    $("album").on();
+
+      },function(){
+
+        
+        $(".cover").removeAttr("style");
+        $(".album").removeAttr("style");
+
+        $(".album").on('click',open);
+        $(".cover").on('mouseover',hoverCover);
+        $(".cover").on('mouseout', leaveCover);
+
+
+      });
+
   	return false;
   });
+
 
 });

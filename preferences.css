@@ -15,22 +15,24 @@ body {
   display:block;
   margin:auto;
 }
+ .list{
 
+   display:inline-block;
+   vertical-align:top;
+ }
 .album {
   width: 330px;
   height: 330px;
   margin:10px;
 
-  display: block;
+  display: inline-block;
 }
  .hidden{
-   display: inline-block;
+   display: none;
  }
  .place_holder{
    width: 330px;
    height: 330px;
-
-
    display: inline-block;
 
  }
