@@ -21,7 +21,7 @@ $(document).ready(function(){
   //Lorsque vous cliquez sur un lien de la classe poplight et que le href commence par #
   $(".album").click(function() {
 
-    $(this).off();
+    $(this).not(".close").off();
     $(this).css({
 
       position: 'fixed',
@@ -59,8 +59,7 @@ $(document).ready(function(){
 
     },function(){
 
-      $(this).prepend('  <a href="#" class="close"><img src="pop_close.png" class="btn_close" title="Fermer" alt="Fermer" /><a><h2>The 2nd Law</h2><h3>unsustainable</h1>');
-      $(this).append('<div style="display:inline-block;vertical-align:top;"><ul><li>musique</li><li>musique</li><li>musique</li></ul><div>');
+      $(this).find(".hidden").css("display", "inline-block")
     });
 
 
@@ -76,46 +75,51 @@ $(document).ready(function(){
   	return false;
   });
 
-  //Fermeture de la pop-up et du fond
+
+
+
   $(".close").click(function() {
     console.log('test_close');
-  	// $('#fade').fadeOut(function() {
-  	// 	$('#fade').remove();
-  	// });
-    // $(this).parent().children().not("img").remove();
-    // $(this).parent().on();
-    // $(this).parent().css({
-    //
-    //   position: 'relative',
-    //   display: 'inline-block',
-    //
-    // });
-    //
-    // $(".cover").on();
-    // $(this).parent().find(".cover").css('display', 'block');
-    //
-    // $(this).parent().css('background-color', 'none');
-    // $(this).parent().find(".cover").animate({
-    //
-    //   width:'300px',
-    //   height:'300px',
-    //
-    //
-    // });
-    // $(this).parent().animate({
-    //
-    //
-    //   padding: '0px',
-    //
-    //   width: '330px',
-    //   height: '330px',
-    //
-    //
-    //   margin: '10px',
-    //   zIndex: '0'
-    //
-    // });
-  	// return false;
+  	$('#fade').fadeOut(function() {
+  		$('#fade').remove();
+  	});
+    $(this).parent().children().not("img").css("display", "none");
+    $(this).parent().on();
+    $(this).parent().css({
+
+      position: 'relative',
+      display: 'inline-block',
+
+    });
+
+
+    $(this).parent().find(".cover").css('display', 'block');
+
+    $(this).parent().css('background-color', 'none');
+    $(this).parent().find(".cover").animate({
+
+      width:'300px',
+      height:'300px'
+
+
+    });
+    $(this).parent().animate({
+
+
+      padding: '0px',
+
+      width: '330px',
+      height: '330px',
+      left:'0%',
+      top:'0%',
+
+      margin: '10px',
+      zIndex: '0'
+
+    });
+    $(".cover").on();
+    $("album").on();
+  	return false;
   });
 
 });
