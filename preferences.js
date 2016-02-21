@@ -77,44 +77,45 @@ $(document).ready(function(){
   });
 
   //Fermeture de la pop-up et du fond
-  $(".close").click(function() { //Au clic sur le bouton ou sur le calque...
-  	$('#fade').fadeOut(function() {
-  		$('#fade').remove();
-  	});
-    $(this).parent().children().not("img").remove();
-    $(this).parent().on();
-    $(this).parent().css({
-
-      position: 'relative',
-      display: 'inline-block',
-
-    });
-
-    $(".cover").on();
-    $(this).parent().find(".cover").css('display', 'block');
-
-    $(this).parent().css('background-color', 'none');
-    $(this).parent().find(".cover").animate({
-
-      width:'300px',
-      height:'300px',
-
-
-    });
-    $(this).parent().animate({
-
-
-      padding: '0px',
-
-      width: '330px',
-      height: '330px',
-
-      
-      margin: '10px',
-      zIndex: '0'
-
-    });
-  	return false;
+  $(".close").click(function() {
+    console.log('test_close');
+  	// $('#fade').fadeOut(function() {
+  	// 	$('#fade').remove();
+  	// });
+    // $(this).parent().children().not("img").remove();
+    // $(this).parent().on();
+    // $(this).parent().css({
+    //
+    //   position: 'relative',
+    //   display: 'inline-block',
+    //
+    // });
+    //
+    // $(".cover").on();
+    // $(this).parent().find(".cover").css('display', 'block');
+    //
+    // $(this).parent().css('background-color', 'none');
+    // $(this).parent().find(".cover").animate({
+    //
+    //   width:'300px',
+    //   height:'300px',
+    //
+    //
+    // });
+    // $(this).parent().animate({
+    //
+    //
+    //   padding: '0px',
+    //
+    //   width: '330px',
+    //   height: '330px',
+    //
+    //
+    //   margin: '10px',
+    //   zIndex: '0'
+    //
+    // });
+  	// return false;
   });
 
 });
