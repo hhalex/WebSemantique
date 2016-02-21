@@ -20,6 +20,7 @@ body {
   width: 330px;
   height: 330px;
   margin:10px;
+  
   display: inline-block;
 }
 #fade { /*--Masque opaque noir de fond--*/

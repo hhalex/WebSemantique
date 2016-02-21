@@ -19,10 +19,53 @@ $(document).ready(function(){
 
 
   //Lorsque vous cliquez sur un lien de la classe poplight et que le href commence par #
-  $(".cover").click(function() {
+  $(".album").click(function() {
 
-    $('#popup').fadeIn();
-    console.log('test');
+    $(this).off();
+    $(this).css({
+
+      position: 'fixed',
+      display: 'block',
+      color: 'white'
+    });
+
+    $(".cover").off();
+    $(this).find(".cover").css('display', 'inline-block');
+
+    $(this).css('background-color', 'black');
+    $(this).find(".cover").animate({
+
+      width:'200px',
+      height:'200px',
+
+      marginTop:'0px',
+      marginLeft:'0px',
+      marginRight:'0px',
+      marginBottom:'0px',
+    });
+    $(this).animate({
+
+
+    	padding: '10px',
+
+      width: '400px',
+      height: '400px',
+
+      left :'50%',
+      top: '50%',
+      marginTop: '-200px',
+      marginLeft: '-200px',
+    	zIndex: '99999'
+
+    },function(){
+
+      $(this).prepend('  <a href="#" class="close"><img src="pop_close.png" class="btn_close" title="Fermer" alt="Fermer" /><a><h2>The 2nd Law</h2><h3>unsustainable</h1>');
+      $(this).append('<div style="display:inline-block;vertical-align:top;"><ul><li>musique</li><li>musique</li><li>musique</li></ul><div>');
+    });
+
+
+
+
 
 
   	//Effet fade-in du fond opaque
@@ -35,9 +78,42 @@ $(document).ready(function(){
 
   //Fermeture de la pop-up et du fond
   $(".close").click(function() { //Au clic sur le bouton ou sur le calque...
-  	$('#fade , .popup_block').fadeOut(function() {
+  	$('#fade').fadeOut(function() {
   		$('#fade').remove();
   	});
+    $(this).parent().children().not("img").remove();
+    $(this).parent().on();
+    $(this).parent().css({
+
+      position: 'relative',
+      display: 'inline-block',
+
+    });
+
+    $(".cover").on();
+    $(this).parent().find(".cover").css('display', 'block');
+
+    $(this).parent().css('background-color', 'none');
+    $(this).parent().find(".cover").animate({
+
+      width:'300px',
+      height:'300px',
+
+
+    });
+    $(this).parent().animate({
+
+
+      padding: '0px',
+
+      width: '330px',
+      height: '330px',
+
+      
+      margin: '10px',
+      zIndex: '0'
+
+    });
   	return false;
   });
 
