@@ -4,7 +4,11 @@ body {
   background-image:url(background.jpeg);
 }
 
+.container{
+  max-width:1420px;
+  margin:auto;
 
+}
 .cover{
   width: 300px;
   height: 300px;
@@ -28,14 +32,16 @@ body {
 }
 .popup_block{
   display:none;
-	background-color:gray;
+	background-color:black;
 	padding: 10px;
-
+  color:white;
   width:400px;
+  height:400px;
 	position: fixed;
   left:50%;
-
-
+  top:50%;
+  margin-top:-200px;
+  margin-left:-200px;
 	z-index: 99999;
 	/*--Les différentes définitions de Box Shadow en CSS3--*/
 
