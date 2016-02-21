@@ -20,7 +20,8 @@ $(document).ready(function(){
 
   //Lorsque vous cliquez sur un lien de la classe poplight et que le href commence par #
   $(".cover").click(function() {
-
+    var img_src = $(this).attr("src");
+    $('#popup').children().find("#mini").attr("src" , img_src);
     $('#popup').fadeIn();
     console.log('test');
 
