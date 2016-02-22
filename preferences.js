@@ -31,12 +31,15 @@ $(document).ready(function(){
     $(this).find(".cover").css('display', 'inline-block');
 
     $(this).css('background-color', 'black');
+
+
     $(this).find(".cover").animate({
 
-      width:'200px',
-      height:'200px',
 
-      marginTop:'0px',
+
+      width :'330',
+      height: '330',
+      marginTop: '0px',
       marginLeft:'0px',
       marginRight:'0px',
       marginBottom:'0px',
@@ -44,10 +47,10 @@ $(document).ready(function(){
     $(this).animate({
 
 
-    	padding: '10px',
+    	paddingRight: '10px',
 
-      width: '400px',
-      height: '400px',
+      width: '550px',
+
 
       left :'50%',
       top: '50%',
@@ -102,12 +105,12 @@ $(document).ready(function(){
     $(this).parent().css('background-color', 'none');
     $(this).parent().find(".cover").animate({
 
-      width:'300px',
-      height:'300px',
-      marginTop: 'auto',
-      marginBottom: 'auto',
-      marginLeft: 'auto',
-      marginRight: 'auto'
+      // width:'300px',
+      // height:'300px',
+      // marginTop: 'auto',
+      // marginBottom: 'auto',
+      // marginLeft: 'auto',
+      // marginRight: 'auto'
 
 
     },function(){});
@@ -115,22 +118,22 @@ $(document).ready(function(){
     $(this).parent().animate({
 
 
-      padding: '0px',
-
-      width: '330px',
-      height: '330px',
-      left:'',
-      top:'',
-
-      marginTop: '10px',
-      marginBottom: '10px',
-      marginLeft: '10px',
-      marginRight: '10px',
+      // padding: '0px',
+      //
+      // width: '330px',
+      // height: '330px',
+      // left:'',
+      // top:'',
+      //
+      // marginTop: '10px',
+      // marginBottom: '10px',
+      // marginLeft: '10px',
+      // marginRight: '10px',
 
 
       },function(){
 
-        
+
         $(".cover").removeAttr("style");
         $(".album").removeAttr("style");
 
