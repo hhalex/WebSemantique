@@ -1,8 +1,16 @@
 $(document).ready(function(){
 
 
-
-
+  // for each(tracks as track){
+  //   var place_holder= $("<div>",
+  //     {
+  //       "class" : "place_holder"
+  //       }
+  //
+  //   );
+  // place_holder.html(  '<div class="album"> <a href="#" class="close hidden"> <img src="pop_close.png" class="btn_close" title="Fermer" alt="Fermer" /> </a> <img class="cover" src="" alt="album_cover"/> <div class="hidden list" > <h2 class="hidden"></h2> <h3 class="hidden"></h1> <ul class="hidden"> </ul> </div> </div>');
+  // place_holder.find("h1")
+  // }
   function hoverCover(){
 
     $(this).parent().css("box-shadow", "10px 10px 5px #000000");
@@ -32,6 +40,12 @@ $(document).ready(function(){
 
 
     $(this).find(".cover").css('display', 'inline-block');
+    $(".cover").css(
+
+      {
+        filter: 'grayscale'
+      }
+    )
 
     $(this).css('background-color', 'black');
 
@@ -106,35 +120,8 @@ $(document).ready(function(){
     $(this).parent().find(".cover").css('display', 'block');
 
     $(this).parent().css('background-color', 'none');
-    $(this).parent().find(".cover").animate({
-
-      // width:'300px',
-      // height:'300px',
-      // marginTop: 'auto',
-      // marginBottom: 'auto',
-      // marginLeft: 'auto',
-      // marginRight: 'auto'
 
 
-    },function(){});
-
-    $(this).parent().animate({
-
-
-      // padding: '0px',
-      //
-      // width: '330px',
-      // height: '330px',
-      // left:'',
-      // top:'',
-      //
-      // marginTop: '10px',
-      // marginBottom: '10px',
-      // marginLeft: '10px',
-      // marginRight: '10px',
-
-
-      },function(){
 
 
         $(".cover").removeAttr("style");
@@ -145,7 +132,7 @@ $(document).ready(function(){
         $(".cover").on('mouseout',leaveCover);
 
 
-      });
+
 
   	return false;
   });
