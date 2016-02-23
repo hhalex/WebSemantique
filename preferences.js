@@ -19,12 +19,15 @@ $(document).ready(function(){
   }
   function open() {
 
-
+    $(".cover").off();
+    $(".album").off();
     $(this).css({
 
       position: 'fixed',
       display: 'block',
-      color: 'white'
+      color: 'white',
+      boxShadow: "0px 0px 0px #000000",
+      zIndex:'9999'
     });
 
 
@@ -44,6 +47,7 @@ $(document).ready(function(){
       marginRight:'0px',
       marginBottom:'0px',
     });
+
     $(this).animate({
 
 
@@ -56,15 +60,15 @@ $(document).ready(function(){
       top: '50%',
       marginTop: '-200px',
       marginLeft: '-200px',
-    	zIndex: '99999'
+
 
     },function(){
 
       $(this).find(".hidden").not('h1').not('h2').css("display", "inline-block")
       $(this).find('h2').css("display" ,"block");
       $(this).find('h3').css("display", "block");
-      $(".cover").off();
-      $(".album").off();
+
+
     });
 
 
@@ -138,7 +142,7 @@ $(document).ready(function(){
 
         $(".album").on('click',open);
         $(".cover").on('mouseover',hoverCover);
-        $(".cover").on('mouseout', leaveCover);
+        $(".cover").on('mouseout',leaveCover);
 
 
       });
