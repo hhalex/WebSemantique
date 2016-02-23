@@ -63,33 +63,41 @@ $(document).ready(function () {
             $('#wordcloud2 a').on('click', function() {
                 // TODO ajouter requête sparql
 
+                /*
+                PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
+                PREFIX dbpprop: <http://dbpedia.org/property/>
+                PREFIX dbres: <http://dbpedia.org/resource/>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                SELECT distinct *
+                WHERE {
+                    ?album a dbpedia-owl:Album .
+                    ?album rdfs:label ?albumName.
+                    ?album dbpedia-owl:artist ?Artist.
+                    ?album dbpedia-owl:genre dbres:Country_rock.
+                Optional{
+                    ?album dbpedia-owl:releaseDate ?date.
+                    ?album dbpprop:title ?title.
+                }
+                Filter (
+                    lang(?albumName)='en')
+                }
+                */
+
                 $.sparql("http://dbpedia.org/sparql")
                     .prefix('onto', 'http://dbpedia.org/ontology/')
                     .prefix('prop', 'http://dbpedia.org/property/')
                     .prefix('res', 'http://dbpedia.org/resource/')
                     .prefix("rdfs","http://www.w3.org/2000/01/rdf-schema#")
-                    .select(["?genre", "?label", "?year", "COUNT(?artiste) AS ?popucalcul"])
-                    .select(["?genre", "?label", "?year", "COUNT(?ancestergenre) AS ?popucalcul"])
-                    .select(["?genre", "?label", "?year", "?album", "?album_name"])
-                    .where("?genre","a","onto:MusicGenre")
-                    .where("?genre","rdfs:label","?label")
-                    .where("?genre","prop:popularity","?year")
-                  //  .where("?genre", "onto:wikiPageLength", "?wikiPageLength")
-                  .where("?artiste", "dbo:genre", "?genre")
-                //    .where("?ancestergenre", "onto:stylisticOrigin", "?genre")
-            //        .filter("xsd:nonNegativeInteger(?wikiPageLength) >= 1000")
-                //    .where("?album","a","onto:Album")
-                //    .where("?album","prop:genre","?genre")
-                //    .where("?album","rdfs:label","?album_name")
-                    .filter("xsd:integer(?year) >= 1980")
-                    .filter("lang(?label) = 'fr'")
-
-                  //    .distinct("?album")
-                      .distinct("?genre")
-                    .orderby("DESC(?popucalcul)")
+                    .select(["?album", "?albumName", "?Artist", "?date", "?title"])
+                    .where("?album","a","onto:MusicGenre")
+                    .where("?album","rdfs:label","?albumName")
+                    .where("?album","onto:artist","?Artist")
+                    .where("?album","onto:genre","res:"+the_genre)
+                    .optional("?album", "onto:releaseDate", "?date")
+                    .optional("?album", "prop:title", "?title")
+                    .filter("lang(?albumName) = 'en'")
+                    .distinct("?album")
                     .limit(30)
-                    //.select(["?genre"])
-                   // .where('?genre', 'a', 'onto:MusicGenre')
                     .execute(function(res)
                     {
 /*      <div class="place_holder">
