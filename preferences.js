@@ -8,21 +8,21 @@ $(document).ready(function(){
   //       }
   //
   //   );
-  // place_holder.html(  '<div class="album"> <a href="#" class="close hidden"> <img src="pop_close.png" class="btn_close" title="Fermer" alt="Fermer" /> </a> <img class="cover" src="" alt="album_cover"/> <div class="hidden list" > <h2 class="hidden"></h2> <h3 class="hidden"></h1> <ul class="hidden"> </ul> </div> </div>');
+  // place_holder.html(  '<div class="album"> <a href="#" class="close secret"> <img src="pop_close.png" class="btn_close" title="Fermer" alt="Fermer" /> </a> <img class="cover" src="" alt="album_cover"/> <div class="secret list" > <h2 class="secret"></h2> <h3 class="secret"></h1> <ul class="secret"> </ul> </div> </div>');
   // place_holder.find("h1")
   // }
   function hoverCover(){
 
     $(this).parent().css("box-shadow", "10px 10px 5px #000000");
-    $(this).css("width", "330px");
-    $(this).css("height", "330px");
+    $(this).css("width", "220px");
+    $(this).css("height", "220px");
     $(".cover").css("filter", "graysaclae(100%)");
 
   }
   function leaveCover(){
     $(this).parent().css("box-shadow", "0px 0px 0px #000000");
-    $(this).css("width", "300px");
-    $(this).css("height", "300px");
+    $(this).css("width", "200px");
+    $(this).css("height", "200px");
 
   }
   function open() {
@@ -40,10 +40,11 @@ $(document).ready(function(){
 
 
     $(this).find(".cover").css('display', 'inline-block');
-    $(".cover").css(
+    $(this).find(".cover").attr('id', 'selected');
+    $(".album").not(this).find('.cover').css(
 
       {
-        filter: 'grayscale'
+        filter: 'grayscale(100%)'
       }
     )
 
@@ -54,8 +55,8 @@ $(document).ready(function(){
 
 
 
-      width :'330',
-      height: '330',
+      width :'220px',
+      height: '220px',
       marginTop: '0px',
       marginLeft:'0px',
       marginRight:'0px',
@@ -67,7 +68,7 @@ $(document).ready(function(){
 
     	paddingRight: '10px',
 
-      width: '550px',
+      width: '440px',
 
 
       left :'50%',
@@ -78,7 +79,7 @@ $(document).ready(function(){
 
     },function(){
 
-      $(this).find(".hidden").not('h1').not('h2').css("display", "inline-block");
+      $(this).find(".secret").not('h1').not('h2').css("display", "inline-block");
       $(this).find('h2').css("display" ,"block");
       $(this).find('h3').css("display", "block");
 
@@ -89,10 +90,7 @@ $(document).ready(function(){
 
 
 
-  	//Effet fade-in du fond opaque
-  	$('body').append('<div id="fade"></div>'); //Ajout du fond opaque noir
-  	//Apparition du fond - .css({'filter' : 'alpha(opacity=80)'}) pour corriger les bogues de IE
-  	$('#fade').css({'filter' : 'alpha(opacity=80)'}).fadeIn(function(){});
+
 
   	return false;
   }
@@ -102,11 +100,10 @@ $(document).ready(function(){
   $(".cover").on('mouseover',hoverCover);
   $(".cover").on('mouseout', leaveCover);
 
-  $(".close").click(function() {
-    console.log('test_close');
-  	$('#fade').fadeOut(function() {
-  		$('#fade').remove();
-  	});
+  function close () {
+
+
+
     $(this).parent().children().not("img").css("display", "none");
     $(this).parent().on();
     $(this).parent().css({
@@ -135,7 +132,10 @@ $(document).ready(function(){
 
 
   	return false;
-  });
+  }
+  $(".close").on("click", close);
+  $(".featherLight-close-icon").on("click", close);
+
 
 
 });
