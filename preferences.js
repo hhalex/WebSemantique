@@ -14,8 +14,13 @@ function leaveCover(){
 }
 function open() {
 
-  $(".cover").off();
-  $(".album").off();
+
+  $(".lightbox").off('click', '.album');
+  $(".lightbox").off('mouseover', '.cover');
+  $(".lightbox").off('mouseout', '.cover');
+
+
+
   $(this).css({
 
     position: 'fixed',
@@ -27,7 +32,6 @@ function open() {
 
 
   $(this).find(".cover").css('display', 'inline-block');
-  $(this).find(".cover").attr('id', 'selected');
   $(".album").not(this).find('.cover').css(
 
     {
@@ -86,29 +90,17 @@ function close () {
 
 
 
-  $(this).parent().children().not("img").css("display", "none");
-  $(this).parent().on();
-  $(this).parent().css({
-
-    position: 'relative',
-    display: 'inline-block',
-
-  });
-
-
-  $(this).parent().find(".cover").css('display', 'block');
-
-  $(this).parent().css('background-color', 'none');
 
 
 
+  $(".secret").removeAttr("style");
+  $(".cover").removeAttr("style");
+  $(".album").removeAttr("style");
 
-      $(".cover").removeAttr("style");
-      $(".album").removeAttr("style");
-
-      $(".album").on('click',open);
-      $(".cover").on('mouseover',hoverCover);
-      $(".cover").on('mouseout',leaveCover);
+  $(".lightbox").on('click', '.album', open);
+  $(".lightbox").on('mouseover', '.cover', hoverCover);
+  $(".lightbox").on('mouseout', '.cover', leaveCover);
+  $(".lightbox").on('click', '.close', close);
 
 
 
@@ -120,14 +112,9 @@ function close () {
 $(document).ready(function(){
 
 
-  $("#lightbox").on('click', '.album', open);
-  $("#lightbox").on('mouseover', '.cover', hoverCover);
-  $("#lightbox").on('mouseout', '.cover', leaveCover);
-
-
-  $(".close").on("click", close);
-  $(".featherLight-close-icon").on("click", close);
-
-
+  $(".lightbox").on('click', '.album', open);
+  $(".lightbox").on('mouseover', '.cover', hoverCover);
+  $(".lightbox").on('mouseout', '.cover', leaveCover);
+  $(".lightbox").on('click', '.close', close);
 
 });

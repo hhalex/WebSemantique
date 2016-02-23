@@ -115,12 +115,14 @@ $(document).ready(function () {
                         var h2_hidden_list = $('<h2 />').addClass('secret').text('The 2nd Law');
                         var h3_hidden_list = $('<h3 />').addClass('secret').text('unsustainable');
                         var ul_hidden = $('<ul />').addClass('secret');
-                        var li_musique = $('<li />').text('musique');
+                        var li1_musique = $('<li />').text('musique');
+                        var li2_musique = $('<li />').text('musique');
+                        var li3_musique = $('<li />').text('musique');
 
-                        ul_hidden.append(li_musique).append(li_musique).append(li_musique);
-                        hidden_list.append(ul_hidden).append(h3_hidden_list).append(h2_hidden_list);
+                        ul_hidden.append(li1_musique).append(li2_musique).append(li3_musique);
+                        hidden_list.append(h2_hidden_list).append(h3_hidden_list).append(ul_hidden);
                         a_album_div.append(img_a_album_div);
-                        album_div.append(hidden_list).append(cover_img).append(a_album_div);
+                        album_div.append(a_album_div).append(cover_img).append(hidden_list);
                         containing_div.append(album_div);
                         $('#mylightbox').append(containing_div);
 
