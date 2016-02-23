@@ -103,8 +103,6 @@ $(document).ready(function () {
                     .limit(30)
                     .execute(function(res)
                     {
-                      console.log(res);
-
 
                       for (el in res)
                       {
@@ -125,11 +123,14 @@ $(document).ready(function () {
                         album_div.append(hidden_list).append(cover_img).append(a_album_div);
                         containing_div.append(album_div);
                         $('#mylightbox').append(containing_div);
+
+              /*          $(".album").on('click',open);
+                        $(".cover").on('mouseover',hoverCover);
+                        $(".cover").on('mouseout', leaveCover);*/
+
                       }
 
                       $('#receiver').trigger('click');
-
-                      console.log('je suis ici');
 
                       return false;
 
