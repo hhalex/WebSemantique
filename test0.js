@@ -6,20 +6,21 @@ $(document).ready(function () {
         .prefix('prop', 'http://dbpedia.org/property/')
         .prefix('res', 'http://dbpedia.org/resource/')
         .prefix("rdfs","http://www.w3.org/2000/01/rdf-schema#")
-        .select(["?genre", "?label", "?year", "COUNT(?artiste) AS ?popucalcul"])
+        .select(["?artist", "?label", "?numberofalbums"])
     //    .select(["?genre", "?label", "?year", "COUNT(?ancestergenre) AS ?popucalcul"])
     //    .select(["?genre", "?label", "?year", "?album", "?album_name"])
-        .where("?genre","a","onto:MusicGenre")
-        .where("?genre","rdfs:label","?label")
-        .where("?genre","prop:popularity","?year")
+        .where("?artist","a","onto:MusicalArtist")
+        .where("?artist","rdfs:label","?label")
+        .where("?artist", "onto:numberOfAlbums", "?numberofalbums")
+    //    .where("?artist","prop:popularity","?year")
       //  .where("?genre", "onto:wikiPageLength", "?wikiPageLength")
-      .where("?artiste", "dbo:genre", "?genre")
+        .where("?artiste", "dbo:genre", "?genre")
     //    .where("?ancestergenre", "onto:stylisticOrigin", "?genre")
 //        .filter("xsd:nonNegativeInteger(?wikiPageLength) >= 1000")
     //    .where("?album","a","onto:Album")
     //    .where("?album","prop:genre","?genre")
     //    .where("?album","rdfs:label","?album_name")
-        .filter("xsd:integer(?year) >= 1980")
+      //  .filter("xsd:integer(?year) >= 1980")
         .filter("lang(?label) = 'fr'")
 
       //    .distinct("?album")
@@ -65,7 +66,7 @@ $(document).ready(function () {
                 // TODO ajouter les albums issus de la requête sparql dans #mylightbox
                 // TODO permettre la sélection
                 // TODO retenir quelque part qu'est-ce-qui  a été sélectionné
-            //    $('#mylightbox').html('<strong>'+$(this).data('genre')+'</strong>');
+                $('#mylightbox').html('<strong>'+$(this).data('genre')+'</strong>');
             });
 
             $('#wordcloud2 a').featherlight($('#mylightbox'));
