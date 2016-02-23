@@ -78,7 +78,7 @@ $(document).ready(function(){
 
     },function(){
 
-      $(this).find(".hidden").not('h1').not('h2').css("display", "inline-block")
+      $(this).find(".hidden").not('h1').not('h2').css("display", "inline-block");
       $(this).find('h2').css("display" ,"block");
       $(this).find('h3').css("display", "block");
 
