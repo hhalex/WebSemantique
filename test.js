@@ -62,10 +62,96 @@ $(document).ready(function () {
 
             $('#wordcloud2 a').on('click', function() {
                 // TODO ajouter requête sparql
+
+                /*
+                PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
+                PREFIX dbpprop: <http://dbpedia.org/property/>
+                PREFIX dbres: <http://dbpedia.org/resource/>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                SELECT distinct *
+                WHERE {
+                    ?album a dbpedia-owl:Album .
+                    ?album rdfs:label ?albumName.
+                    ?album dbpedia-owl:artist ?Artist.
+                    ?album dbpedia-owl:genre dbres:Country_rock.
+                Optional{
+                    ?album dbpedia-owl:releaseDate ?date.
+                    ?album dbpprop:title ?title.
+                }
+                Filter (
+                    lang(?albumName)='en')
+                }
+                */
+
+                $.sparql("http://dbpedia.org/sparql")
+                    .prefix('onto', 'http://dbpedia.org/ontology/')
+                    .prefix('prop', 'http://dbpedia.org/property/')
+                    .prefix('res', 'http://dbpedia.org/resource/')
+                    .prefix("rdfs","http://www.w3.org/2000/01/rdf-schema#")
+                    .select(["?album", "?albumName", "?Artist", "?date", "?title"])
+                    .where("?album","a","onto:MusicGenre")
+                    .where("?album","rdfs:label","?albumName")
+                    .where("?album","onto:artist","?Artist")
+                    .where("?album","onto:genre","res:"+the_genre)
+                    .optional("?album", "onto:releaseDate", "?date")
+                    .optional("?album", "prop:title", "?title")
+                    .filter("lang(?albumName) = 'en'")
+                    .distinct("?album")
+                    .limit(30)
+                    .execute(function(res)
+                    {
+/*      <div class="place_holder">
+        <div class="album" >
+          <a href="#" class="close hidden">
+            <img src="pop_close.png" class="btn_close" title="Fermer" alt="Fermer" />
+          </a>
+
+
+
+          <img class="cover" src="cover.jpg" alt="album_cover"/>
+          <div class="hidden list">
+            <h2 class="hidden">The 2nd Law</h2>
+            <h3 class="hidden">unsustainable</h1>
+
+              <ul class="hidden">
+                <li>musique</li>
+                <li>musique</li>
+                <li>musique</li>
+              </ul>
+          </div>
+        </div>
+      </div>*/
+
+
+
+                      for (el in res)
+                      {
+                        var containing_div = $('<div />').addClass('place_holder');
+                        var album_div = $('<div />').addClass('album');
+                        var a_album_div = $('<a />', {href: '#'}).addClass('close').addClass('hidden');
+                        var img_a_album_div = $('<img />', {src: 'pop_close.png', title: 'Fermer', alt: 'Fermer'}).addClass('btn_close');
+                        var cover_img = $('<img />', {src: 'cover.jpg', alt: 'album_cover'}).addClass('cover');
+                        var hidden_list = $('<div />').addClass('hidden').addClass('list');
+                        var h2_hidden_list = $('<h2 />').addClass('hidden').text('The 2nd Law');
+                        var h3_hidden_list = $('<h3 />').addClass('hidden').text('unsustainable');
+                        var ul_hidden = $('<ul />').addClass('hidden');
+                        var li_musique = $('<li />').text('musique');
+
+                        ul_hidden.append(li_musique).append(li_musique).append(li_musique);
+                        hidden_list.append(ul_hidden).append(h3_hidden_list).append(h2_hidden_list);
+                        a_album_div.append(img_a_album_div);
+                        album_div.append(hidden_list).append(cover_img).append(a_album_div);
+                        containing_div.append(album_div);
+                        $('#myligthbox').append(containing_div);
+                      }
+
+
+                    });
+
                 // TODO ajouter les albums issus de la requête sparql dans #mylightbox
                 // TODO permettre la sélection
                 // TODO retenir quelque part qu'est-ce-qui  a été sélectionné
-            //    $('#mylightbox').html('<strong>'+$(this).data('genre')+'</strong>');
+              //  $('#mylightbox').html('<strong>'+$(this).data('genre')+'</strong>');
             });
 
             $('#wordcloud2 a').featherlight($('#mylightbox'));
