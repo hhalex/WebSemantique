@@ -13,12 +13,11 @@ function leaveCover(){
 }
 function open() {
 
-
+  $(".lightbox").on('click', '.close', close);
   $(".lightbox").off('click', '.album');
   $(".lightbox").off('mouseover', '.cover');
   $(".lightbox").off('mouseout', '.cover');
     $(".lightbox").on('click', '.close', close);
-
 
   $(this).css({
 
@@ -34,7 +33,8 @@ function open() {
   $(".album").not(this).find('.cover').css(
 
     {
-      filter: 'grayscale(100%)'
+      filter: 'grayscale(100%)',
+      WebkitFilter: 'grayscale(100%)'
     }
   )
 
@@ -89,7 +89,6 @@ function close () {
   $(".lightbox").on('mouseover', '.cover', hoverCover);
   $(".lightbox").on('mouseout', '.cover', leaveCover);
   $(".lightbox").off('click', '.close', close);
-
 
 
 
