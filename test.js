@@ -1,3 +1,5 @@
+var ImgCallbacks=[]
+var AlbumsData={}
 function callback_picture_album(data)
 {
   console.log('here is');
@@ -106,11 +108,33 @@ $(document).ready(function () {
                     .where("?Artist", "rdfs:label", "?ArtistName")
                     .where("?album", "prop:cover", "?albumCover")
                     .filter("lang(?albumName) = 'en' && lang(?ArtistName) = 'en'")
-                    .limit(10)
+                    .limit(100)
                     .groupby("?albumName")
                     .execute(function(res)
                     {
+                      var callbackGenerator=function(i){
+                        return function (data)
+                        {
+                          var myelement=$("img[data-id='"+i+"']")
+                          //console.log(data);
+                          //console.log(myelement);
+                          if (data.total > 0)
+                          {
+                            AlbumsData[data.data['0'].id] = data.data['0'];
 
+                            if (data.data['0'].cover_medium)
+                            {
+                              myelement.attr("src", data.data['0'].cover_medium);
+                              //alert(myelement);
+                            }
+                          }
+                          else {
+                            myelement.parent(".place_holder").parent().remove()
+                          }
+                          return false;
+                        };
+                      }
+                      var i=0;
                       for (el in res)
                       {
 
@@ -118,7 +142,7 @@ $(document).ready(function () {
                           var album_div = $('<div />').addClass('album');
                           var a_album_div = $('<a />', {href: '#'}).addClass('close').addClass('secret');
                           var img_a_album_div = $('<img />', {src: 'pop_close.png', title: 'Fermer', alt: 'Fermer'}).addClass('btn_close');
-                          var cover_img = $('<img />', {src: 'lol', alt: 'album_cover'}).addClass('cover');
+                          var cover_img = $('<img />', {src: 'http://static.tumblr.com/2lqtwbf/coolyqooj/untitled-1.png', alt: 'album_cover', 'data-id': i}).addClass('cover');
                           var hidden_list = $('<div />').addClass('secret').addClass('list');
                           var h2_hidden_list = $('<span />').addClass('secret').html(res[el].albumName);
                           var h3_hidden_list = $('<span />').addClass('secret').html(res[el].ArtistName);
@@ -134,22 +158,24 @@ $(document).ready(function () {
                           containing_div.append(album_div);
                           $('#mylightbox').append(containing_div);
 
-                        $.ajax({
-                        type: "POST",
-                        dataType: 'jsonp',
-                        data:{
-                          action:'query',
-                          titles: 'File:'+res[el].albumCover,
-                          prop: 'imageinfo',
-                          iiprop: 'url',
-                          format: 'json',
-                          redirects: true,
-                          callback: 'callback_picture_album'
-                        },
-                        xhrFields: {withCredentials: true},
-                        url:'https://en.wikipedia.org/w/api.php'
+                          var thisCallback = callbackGenerator(i)
+
+                          $("body").append("<b>"+res[el].albumName+"</b>");
+
+                          $.ajax({
+                            type: 'GET',
+                            dataType: 'jsonp',
+                            data:{
+                              q: res[el].albumName,
+                              index:'0',
+                              limit:'1',
+                              output: 'jsonp'
+                            },
+                            success: thisCallback,
+                            url:'https://api.deezer.com/search/album/'
                           });
 
+                          i++;
                       }
 
                       $('#receiver').trigger('click');
@@ -165,19 +191,6 @@ $(document).ready(function () {
             });
 
             $('#receiver').featherlight($('#mylightbox'));
-
-            /*  $("#wordcloud2").awesomeCloud({
-                "size" : {
-                  "grid" : 9,
-                  "factor" : 1
-                },
-                "options" : {
-                  "color" : "random-dark",
-                  "rotationRatio" : 0.35
-                },
-                "font" : "'Times New Roman', Times, serif",
-                "shape" : "circle"
-              });*/
 
             return false;
         });
