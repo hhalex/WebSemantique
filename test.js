@@ -66,41 +66,41 @@ $(document).ready(function () {
 
                 /*
                 PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
-                PREFIX dbpprop: <http://dbpedia.org/property/>
-                PREFIX dbres: <http://dbpedia.org/resource/>
-                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                SELECT distinct *
-                WHERE {
-                    ?album a dbpedia-owl:Album .
-                    ?album rdfs:label ?albumName.
-                    ?album dbpedia-owl:artist ?Artist.
-                    ?album dbpedia-owl:genre dbres:Country_rock.
-                Optional{
-                    ?album dbpedia-owl:releaseDate ?date.
-                    ?album dbpprop:title ?title.
+                                PREFIX dbpprop: <http://dbpedia.org/property/>
+                                PREFIX dbres: <http://dbpedia.org/resource/>
+                                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                                SELECT *
+                                WHERE {
+                                    ?album a dbpedia-owl:Album.
+                                    ?album rdfs:label ?albumName.
+                                    ?album dbpedia-owl:artist ?Artist.
+                                    ?album dbpedia-owl:genre dbres:Country_rock.
+                                    ?album rdfs:label ?albumName.
+
+                                   Filter (
+                                    lang(?albumName)='en')
                 }
-                Filter (
-                    lang(?albumName)='en')
-                }
+                                GROUP BY ?album
                 */
 
-                var the_genre = $(this).data('genre');
+                var the_genre = $(this).data('uri');
                 $('#mylightbox').empty();
+                console.log(the_genre);
 
                 $.sparql("http://dbpedia.org/sparql")
                     .prefix('onto', 'http://dbpedia.org/ontology/')
                     .prefix('prop', 'http://dbpedia.org/property/')
                     .prefix('res', 'http://dbpedia.org/resource/')
                     .prefix('rdfs','http://www.w3.org/2000/01/rdf-schema#')
-                    .select("*")
+                  //  .select("*")
                     .where("?album","a","onto:Album")
                     .where("?album","rdfs:label","?albumName")
                     .where("?album","onto:artist","?Artist")
-                    .where("?album","onto:genre","res:Country_rock")
-          //          .optional("?album", "onto:releaseDate", "?date")
-            //        .optional("?album", "prop:title", "?title")
-                    .distinct("?album")
-                    .limit(30)
+                    .where("?album","onto:genre","<"+the_genre+">")
+                    .where("?Artist", "rdfs:label", "?ArtistName")
+                    .filter("lang(?albumName) = 'en' && lang(?ArtistName) = 'en'")
+                    .limit(10)
+                    .groupby("?albumName")
                     .execute(function(res)
                     {
 
@@ -112,8 +112,8 @@ $(document).ready(function () {
                         var img_a_album_div = $('<img />', {src: 'pop_close.png', title: 'Fermer', alt: 'Fermer'}).addClass('btn_close');
                         var cover_img = $('<img />', {src: 'cover.jpg', alt: 'album_cover'}).addClass('cover');
                         var hidden_list = $('<div />').addClass('secret').addClass('list');
-                        var h2_hidden_list = $('<h2 />').addClass('secret').text('The 2nd Law');
-                        var h3_hidden_list = $('<h3 />').addClass('secret').text('unsustainable');
+                        var h2_hidden_list = $('<h2 />').addClass('secret').html(res[el].albumName);
+                        var h3_hidden_list = $('<h3 />').addClass('secret').html(res[el].ArtistName);
                         var ul_hidden = $('<ul />').addClass('secret');
                         var li1_musique = $('<li />').text('musique');
                         var li2_musique = $('<li />').text('musique');
@@ -125,11 +125,6 @@ $(document).ready(function () {
                         album_div.append(a_album_div).append(cover_img).append(hidden_list);
                         containing_div.append(album_div);
                         $('#mylightbox').append(containing_div);
-
-              /*          $(".album").on('click',open);
-                        $(".cover").on('mouseover',hoverCover);
-                        $(".cover").on('mouseout', leaveCover);*/
-
                       }
 
                       $('#receiver').trigger('click');
