@@ -19,6 +19,12 @@ body {
   display:block;
   margin:auto;
 }
+.coverHovered{
+  box-shadow :10px 10px 5px #000000;
+  width: 220px;
+  height: 220px;
+}
+
  .list{
 
    display:inline-block;
@@ -30,8 +36,25 @@ body {
   margin:10px;
   display: inline-block;
 }
+.albumExtend{
+
+  position: fixed;
+  display: block;
+  color: white;
+  boxShadow: 0px 0px 0px #000000;
+  z-index:9999;
+  background-color: black;
+}
+
  .secret{
    display: none;
+ }
+ .secretExtended{
+   display:inline-block;
+ }
+
+ h2.secretExtended,h3.secretExtended{
+   display:block;
  }
  .place_holder{
    width: 220px;
