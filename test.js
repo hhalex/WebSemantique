@@ -1,3 +1,9 @@
+function callback_picture_album(data)
+{
+  console.log('here is');
+  console.log(data);
+}
+
 $(document).ready(function () {
     $("#list").empty();
     $("#list").append('<li><b>Liste des genres</b></li>');
@@ -98,6 +104,7 @@ $(document).ready(function () {
                     .where("?album","onto:artist","?Artist")
                     .where("?album","onto:genre","<"+the_genre+">")
                     .where("?Artist", "rdfs:label", "?ArtistName")
+                    .where("?album", "prop:cover", "?albumCover")
                     .filter("lang(?albumName) = 'en' && lang(?ArtistName) = 'en'")
                     .limit(10)
                     .groupby("?albumName")
@@ -106,25 +113,42 @@ $(document).ready(function () {
 
                       for (el in res)
                       {
-                        var containing_div = $('<div />').addClass('place_holder');
-                        var album_div = $('<div />').addClass('album');
-                        var a_album_div = $('<a />', {href: '#'}).addClass('close').addClass('secret');
-                        var img_a_album_div = $('<img />', {src: 'pop_close.png', title: 'Fermer', alt: 'Fermer'}).addClass('btn_close');
-                        var cover_img = $('<img />', {src: 'cover.jpg', alt: 'album_cover'}).addClass('cover');
-                        var hidden_list = $('<div />').addClass('secret').addClass('list');
-                        var h2_hidden_list = $('<h2 />').addClass('secret').html(res[el].albumName);
-                        var h3_hidden_list = $('<h3 />').addClass('secret').html(res[el].ArtistName);
-                        var ul_hidden = $('<ul />').addClass('secret');
-                        var li1_musique = $('<li />').text('musique');
-                        var li2_musique = $('<li />').text('musique');
-                        var li3_musique = $('<li />').text('musique');
+                          var containing_div = $('<div />').addClass('place_holder');
+                          var album_div = $('<div />').addClass('album');
+                          var a_album_div = $('<a />', {href: '#'}).addClass('close').addClass('secret');
+                          var img_a_album_div = $('<img />', {src: 'pop_close.png', title: 'Fermer', alt: 'Fermer'}).addClass('btn_close');
+                          var cover_img = $('<img />', {src: 'lol', alt: 'album_cover'}).addClass('cover');
+                          var hidden_list = $('<div />').addClass('secret').addClass('list');
+                          var h2_hidden_list = $('<h2 />').addClass('secret').html(res[el].albumName);
+                          var h3_hidden_list = $('<h3 />').addClass('secret').html(res[el].ArtistName);
+                          var ul_hidden = $('<ul />').addClass('secret');
+                          var li1_musique = $('<li />').text('musique');
+                          var li2_musique = $('<li />').text('musique');
+                          var li3_musique = $('<li />').text('musique');
 
-                        ul_hidden.append(li1_musique).append(li2_musique).append(li3_musique);
-                        hidden_list.append(h2_hidden_list).append(h3_hidden_list).append(ul_hidden);
-                        a_album_div.append(img_a_album_div);
-                        album_div.append(a_album_div).append(cover_img).append(hidden_list);
-                        containing_div.append(album_div);
-                        $('#mylightbox').append(containing_div);
+                          ul_hidden.append(li1_musique).append(li2_musique).append(li3_musique);
+                          hidden_list.append(h2_hidden_list).append(h3_hidden_list).append(ul_hidden);
+                          a_album_div.append(img_a_album_div);
+                          album_div.append(a_album_div).append(cover_img).append(hidden_list);
+                          containing_div.append(album_div);
+                          $('#mylightbox').append(containing_div);
+
+                        $.ajax({
+                        type: "POST",
+                        dataType: 'jsonp',
+                        data:{
+                          action:'query',
+                          titles: 'File:'+res[el].albumCover,
+                          prop: 'imageinfo',
+                          iiprop: 'url',
+                          format: 'json',
+                          redirects: true,
+                          callback: 'callback_picture_album'
+                        },
+                        xhrFields: {withCredentials: true},
+                        url:'https://en.wikipedia.org/w/api.php'
+                          });
+
                       }
 
                       $('#receiver').trigger('click');
