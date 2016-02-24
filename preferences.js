@@ -30,8 +30,8 @@ function open() {
 
   $(this).find(".cover").animate({
 
-    width :'220px',
-    height: '220px',
+    width :'300px',
+    height: '300px',
     marginTop: '0px',
     marginLeft:'0px',
     marginRight:'0px',
@@ -41,13 +41,14 @@ function open() {
   $(this).animate({
 
 
-    paddingRight: '10px',
-    width: '440px',
+    
+    width: '600px',
+    height: '300px',
 
     left :'50%',
     top: '50%',
-    marginTop: '-200px',
-    marginLeft: '-200px',
+    marginTop: '-150px',
+    marginLeft: '-300px',
 
 
   },function(){

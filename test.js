@@ -113,14 +113,15 @@ $(document).ready(function () {
 
                       for (el in res)
                       {
+
                           var containing_div = $('<div />').addClass('place_holder');
                           var album_div = $('<div />').addClass('album');
                           var a_album_div = $('<a />', {href: '#'}).addClass('close').addClass('secret');
                           var img_a_album_div = $('<img />', {src: 'pop_close.png', title: 'Fermer', alt: 'Fermer'}).addClass('btn_close');
                           var cover_img = $('<img />', {src: 'lol', alt: 'album_cover'}).addClass('cover');
                           var hidden_list = $('<div />').addClass('secret').addClass('list');
-                          var h2_hidden_list = $('<h2 />').addClass('secret').html(res[el].albumName);
-                          var h3_hidden_list = $('<h3 />').addClass('secret').html(res[el].ArtistName);
+                          var h2_hidden_list = $('<span />').addClass('secret').html(res[el].albumName);
+                          var h3_hidden_list = $('<span />').addClass('secret').html(res[el].ArtistName);
                           var ul_hidden = $('<ul />').addClass('secret');
                           var li1_musique = $('<li />').text('musique');
                           var li2_musique = $('<li />').text('musique');

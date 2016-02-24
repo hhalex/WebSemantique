@@ -29,6 +29,7 @@ body {
 
    display:inline-block;
    vertical-align:top;
+   margin-left:10px;
  }
 .album {
   width: 220px;
@@ -49,11 +50,15 @@ body {
  .secret{
    display: none;
  }
+ span.secret{
+   font-size:15px;
+   margin: 8px;
+ }
  .secretExtended{
    display:inline-block;
  }
 
- h2.secretExtended,h3.secretExtended{
+ span.secretExtended{
    display:block;
  }
  .place_holder{
