@@ -3,7 +3,7 @@ function hoverCover(){
   $(this).parent().css("box-shadow", "10px 10px 5px #000000");
   $(this).css("width", "220px");
   $(this).css("height", "220px");
-  $(".cover").css("filter", "graysaclae(100%)");
+//  $(".cover").css("filter", "grayscale(100%)").css("-webkit-filter", "grayscale(100%)");
 
 }
 function leaveCover(){
@@ -14,11 +14,10 @@ function leaveCover(){
 }
 function open() {
 
-
+  $(".lightbox").on('click', '.close', close);
   $(".lightbox").off('click', '.album');
   $(".lightbox").off('mouseover', '.cover');
   $(".lightbox").off('mouseout', '.cover');
-
 
 
   $(this).css({
@@ -35,7 +34,8 @@ function open() {
   $(".album").not(this).find('.cover').css(
 
     {
-      filter: 'grayscale(100%)'
+      filter: 'grayscale(100%)',
+      WebkitFilter: 'grayscale(100%)'
     }
   )
 
@@ -100,9 +100,7 @@ function close () {
   $(".lightbox").on('click', '.album', open);
   $(".lightbox").on('mouseover', '.cover', hoverCover);
   $(".lightbox").on('mouseout', '.cover', leaveCover);
-  $(".lightbox").on('click', '.close', close);
-
-
+  $(".lightbox").off('click', '.close', close);
 
 
   return false;
