@@ -129,7 +129,7 @@ $(document).ready(function () {
                             }
                           }
                           else {
-                            myelement.parent(".place_holder").parent().remove()
+                            myelement.parent(".place_holder").remove()
                           }
                           return false;
                         };

@@ -16,18 +16,25 @@ body {
   width: 200px;
   height: 200px;
   vertical-align: middle;
-  display:block;
+  float:left;
   margin:auto;
+  -webkit-transition: all 0.3s; // Chrome
+    -moz-transition: all 0.3s; // Mozilla
+    -o-transition: all 0.3s; // Opera
+    transition: all 0.3s;
 }
 .coverHovered{
-  box-shadow :10px 10px 5px #000000;
+  transform: rotate(3deg);
+  box-shadow :10px 10px 3px #888;
   width: 220px;
   height: 220px;
+
 }
 
  .list{
-
-   display:inline-block;
+   margin-top:25px;
+   width:200px;
+   float:left;
    vertical-align:top;
    margin-left:10px;
  }
