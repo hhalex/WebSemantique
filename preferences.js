@@ -1,3 +1,4 @@
+var selectedTracks=[];
 function hoverCover(){
 
   //$(this).parent().css("box-shadow", "10px 10px 3px #888");
@@ -14,11 +15,34 @@ function leaveCover(){
   //$(this).css("height", "200px");
 
 }
+function selectTrack(){
+  if($(this).hasClass("selected")){
+
+    $(this).removeClass("selected");
+    $(this).find("img").remove();
+    // selectedTracks.remove($(this).atrr("data-uri"));
+
+
+  }
+  else{
+    var v = $("<img>");
+
+    v.attr("src", "selected.png");
+
+
+    $(this).addClass("selected");
+    $(this).append(v);
+
+    // selectTrack.push($(this).atrr("data-uri"));
+  }
+}
 function open() {
 
   $(".lightbox").off('click', '.album');
   $(".lightbox").off('mouseover', '.cover');
   $(".lightbox").off('mouseout', '.cover');
+  $(".lightbox").on('click', '.close', close);
+  $(".lightbox").on('click', 'li', selectTrack);
 
 
   $(this).css({
@@ -92,7 +116,8 @@ function close () {
   $(".lightbox").on('click', '.album', open);
   $(".lightbox").on('mouseover', '.cover', hoverCover);
   $(".lightbox").on('mouseout', '.cover', leaveCover);
-  $(".lightbox").on('click', '.close', close);
+  $(".lightbox").off('click', '.close');
+  $(".lightbox").off('click', 'li');
 
 
 
@@ -107,6 +132,6 @@ $(document).ready(function(){
   $(".lightbox").on('click', '.album', open);
   $(".lightbox").on('mouseover', '.cover', hoverCover);
   $(".lightbox").on('mouseout', '.cover', leaveCover);
-  $(".lightbox").on('click', '.close', close);
+
 
 });
