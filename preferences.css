@@ -68,6 +68,18 @@ body {
  span.secretExtended{
    display:block;
  }
+ .album li{
+   margin:5px;
+ }
+ .selected{
+   background-color: #424242;
+ }
+ .selected  img{
+   float: right;
+   width:  10px;
+   height: 10px;
+   margin-top: 5px;
+ }
  .place_holder{
    width: 220px;
    height: 220px;

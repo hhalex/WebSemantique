@@ -20,6 +20,10 @@
     <link rel="stylesheet" href="preferences.css" type="text/css" media="screen" />
     <script language="JavaScript" src="preferences.js"></script>
     <script src="https://cdns-files.dzcdn.net/js/min/dz.js"></script>
+    <script type="text/javascript" src="https://cdns-files.dzcdn.net/js/min/dz-v00348053.js"></script>
+
+    <script type="text/JavaScript" src="player.js"></script>
+    <link rel="stylesheet" href="player.css" type="text/css" />
     <style type="text/css">
       .wordcloud {
         border: 1px solid #036;
@@ -55,7 +59,42 @@
       <div class="jumbotron">
         <h2>Please pick a music genre</h2>
 
-        <div id="mylightbox" class="lightbox">Will be opened into a featherlight popup.</div>
+        <div id="mylightbox" class="lightbox">
+          <div id="albums" style="display:inline-block">
+          </div>
+          <div  style="display:inline-block">
+                  <div id="dz-root"></div>
+                  <div id="player" style="width:100%;" align="center"></div>
+                  <br/>
+                  <div id="controlers">
+
+                  	<input type="button" onclick="DZ.player.playAlbum(302127); return false;" value="Play Daft Punk - Discovery"/>
+                  	<input type="button" onclick="DZ.player.playAlbum(301775); return false;" value="Play Daft Punk - Homework"/>
+                  	<br/>
+                  			<input type="button" onclick="DZ.player.playEpisodes([100]); return false;" value="Play Episodes"/>
+                  		<input type="button" onclick="DZ.player.playPodcast(100); return false;" value="Play Podcast"/>
+                  		<input type="button" onclick="DZ.player.playRadio(203); return false;" value="Play Radio"/>
+                  	<input type="button" onclick="DZ.player.playSmartRadio(13); return false;" value="Play Smart Radio"/>
+                  	<input type="button" onclick="DZ.player.playRadio(7548470, 'user'); return false;" value="Play User Radio"/>
+
+                  	<br/>
+                  	<input type="button" onclick="DZ.player.play(); return false;" value="Play"/>
+                  	<input type="button" onclick="DZ.player.pause(); return false;" value="Pause"/>
+                  	<input type="button" onclick="DZ.player.prev(); return false;" value="Prev"/>
+                  	<input type="button" onclick="DZ.player.next(); return false;" value="Next"/>
+                  	<br/>
+                  	<input type="button" onclick="DZ.player.setMute(); return false;" value="Set Mute"/>
+                  	<input type="button" onclick="DZ.player.setVolume(20); return false;" value="Set Volume 20"/>
+                  	<input type="button" onclick="DZ.player.setVolume(80); return false;" value="Set Volume 80"/>
+
+                  	<br/><br/><br/>
+                  </div>
+                  <div id="slider_seek" class="progressbarplay" style="">
+                    <div class="bar" style="width: 0%;"></div>
+                  </div>
+                      </div>
+
+        </div>
         <div id="receiver"></div>
 
         <div id="results_requete">
