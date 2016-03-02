@@ -99,6 +99,7 @@ $(document).ready(function () {
                     .prefix('onto', 'http://dbpedia.org/ontology/')
                     .prefix('prop', 'http://dbpedia.org/property/')
                     .prefix('res', 'http://dbpedia.org/resource/')
+                    .prefix('page', 'http://dbpedia.org/page/')
                     .prefix('rdfs','http://www.w3.org/2000/01/rdf-schema#')
                   //  .select("*")
                     .where("?album","a","onto:Album")
@@ -112,10 +113,10 @@ $(document).ready(function () {
                     .groupby("?albumName")
                     .execute(function(res)
                     {
-                      var callbackGenerator=function(i){
+                      var callbackGenerator=function(j){
                         return function (data)
                         {
-                          var myelement=$("img[data-id='"+i+"']")
+                          var myelement=$("img[data-id='"+j+"']")
                           //console.log(data);
                           //console.log(myelement);
                           if (data.total > 0)
@@ -134,6 +135,39 @@ $(document).ready(function () {
                           return false;
                         };
                       }
+                      var callbackGeneratorTracks=function(j){
+                        return function (data)
+                        {
+
+                          var myelement=$("img[data-id='"+j+"']").parent(".album").find(".list");
+                          console.log(j);
+                          //console.log(data);
+                          //console.log(myelement);
+                          //myelement.html('pouf');
+                          console.log(data)
+                          if(data.length > 0){
+                            var ul = $("<ul>");
+                            for ( el in data)
+                            {
+                              if ('track' in data[el]){
+                                var li = $("<li>");
+                                var a = $("<a>");
+                                a.attr("href", data[el].track.uri);
+                                a.text(data[el].name);
+                                li.append(a);
+                                ul.append(li);
+                              }
+
+                            }
+                            myelement.append(ul);
+                          }
+                          else {
+                            myelement.parent().parent().remove();
+                          }
+                          return false;
+                        };
+                      }
+
                       var i=0;
                       for (el in res)
                       {
@@ -146,21 +180,40 @@ $(document).ready(function () {
                           var hidden_list = $('<div />').addClass('secret').addClass('list');
                           var h2_hidden_list = $('<span />').addClass('secret').html(res[el].albumName);
                           var h3_hidden_list = $('<span />').addClass('secret').html(res[el].ArtistName);
-                          var ul_hidden = $('<ul />').addClass('secret');
-                          var li1_musique = $('<li />').text('musique');
-                          var li2_musique = $('<li />').text('musique');
-                          var li3_musique = $('<li />').text('musique');
 
-                          ul_hidden.append(li1_musique).append(li2_musique).append(li3_musique);
-                          hidden_list.append(h2_hidden_list).append(h3_hidden_list).append(ul_hidden);
+
+
+                          hidden_list.append(h2_hidden_list).append(h3_hidden_list);
                           a_album_div.append(img_a_album_div);
                           album_div.append(a_album_div).append(cover_img).append(hidden_list);
                           containing_div.append(album_div);
                           $('#mylightbox').append(containing_div);
 
-                          var thisCallback = callbackGenerator(i)
+                          // Récupération sparql des pistes
+                          var thisCallbackTracks = callbackGeneratorTracks(i);
+                          if (typeof res[el].album != 'undefined'){
+                              $.sparql("http://dbpedia.org/sparql")
+                                //.prefix('onto', 'http://dbpedia.org/ontology/')
+                                //.prefix('prop', 'http://dbpedia.org/property/')
+                                //.prefix('res', 'http://dbpedia.org/resource/')
+                                //.prefix('page', 'http://dbpedia.org/page/')
+                                .prefix('rdfs','http://www.w3.org/2000/01/rdf-schema#')
+                                .select(["?track", "?name"])
 
-                          $("body").append("<b>"+res[el].albumName+"</b>");
+                                //.where("?track","prop:album",res[el].album.uri)
+                                .where("?track","<http://dbpedia.org/property/album>","<"+res[el].album.uri+">")
+                                .where("?track","rdfs:label","?name")
+                                .filter("lang(?name) = 'en'")
+                                .limit(100)
+                                //.where("?Artist", "rdfs:label", "?ArtistName")
+                                //.where("?album", "prop:cover", "?albumCover")
+                                //.filter("lang(?track) = 'en'")
+                                .execute(thisCallbackTracks);
+                              //.execute(thisCallbackTracks);
+                            }
+
+                          // Opération Jaquette
+                          var thisCallback = callbackGenerator(i);
 
                           $.ajax({
                             type: 'GET',
