@@ -93,10 +93,11 @@ function Album(el, res) {
             {
                 if ('track' in data[el_]){
                     var li = $("<li>");
-                    var a = $("<a>");
-                    a.attr("href", data[el_].track.uri);
-                    a.text(data[el_].name);
-                    li.append(a);
+                //    var a = $("<a>");
+                //    a.attr("href", data[el_].track.uri);
+                    li.text(data[el_].name);
+                    li.attr('data-uri', data[el_].track.uri);
+                  //  li.append();
                     ul.append(li);
                 }
             }

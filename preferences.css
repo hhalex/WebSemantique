@@ -43,6 +43,15 @@ body {
  .list ul{
    list-style-type: none;
  }
+
+ .list ul li {
+   cursor: pointer;
+ }
+
+ .list ul li:hover{
+   background-color: #424242;
+ }
+
 .album {
   width: 220px;
   height: 220px;

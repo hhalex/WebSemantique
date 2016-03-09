@@ -20,8 +20,8 @@ function selectTrack(){
 
     $(this).removeClass("selected");
     $(this).find("img").remove();
-    // selectedTracks.remove($(this).atrr("data-uri"));
 
+    removeInLikeList($(this).attr('data-uri'));
 
   }
   else{
@@ -33,7 +33,7 @@ function selectTrack(){
     $(this).addClass("selected");
     $(this).append(v);
 
-    // selectTrack.push($(this).atrr("data-uri"));
+    addToLikeList($(this).attr('data-uri'));
   }
 }
 function open() {
@@ -131,14 +131,14 @@ function close () {
 
 function addToLikeList(track)
 {
-  var cookie = [];
+  var cookie = {};
 
   if (typeof Cookies.get('likes') != 'undefined') {
     // si il y a des déjà des choses likées
     var cookie = JSON.parse(Cookies.get('likes'));
   }
 
-  cookie.push(track);
+  cookie[track] = 1;
   Cookies.set('likes', cookie);
 }
 
@@ -155,13 +155,17 @@ function getLikeList()
 }
 
 // fonction qui sert à remove une track
-// directement avec l'id dans l'array
+// directement avec l'uri de la track
 
-function removeInLikeList(id)
+function removeInLikeList(track)
 {
   if (typeof Cookies.get('likes') != 'undefined') {
       var cookie = JSON.parse(Cookies.get('likes'));
-      cookie.splice(id, 1);
+
+      if (typeof cookie[track] != 'undefined')
+      {
+        delete cookie[track];
+      }
       Cookies.set('likes', cookie);
   }
 }
