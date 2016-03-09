@@ -36,13 +36,16 @@ requetesSparql = {
             .prefix('res', 'http://dbpedia.org/resource/')
             .prefix('page', 'http://dbpedia.org/page/')
             .prefix('rdfs','http://www.w3.org/2000/01/rdf-schema#')
+            .select(["?album", "?Artist", "?ArtistName", "?albumName", "COUNT(?track) AS ?popucalcul"])
             .where("?album","a","onto:Album")
             .where("?album","rdfs:label","?albumName")
             .where("?album","onto:artist","?Artist")
             .where("?album","onto:genre","<"+the_genre+">")
+            .where("?track", "prop:album", "?album")
             .where("?Artist", "rdfs:label", "?ArtistName")
-            .where("?album", "prop:cover", "?albumCover")
+            //.where("?album", "prop:cover", "?albumCover")
             .filter("lang(?albumName) = 'en' && lang(?ArtistName) = 'en'")
+            .orderby("DESC(?popucalcul)")
             .limit(100)
             .groupby("?albumName");
     },

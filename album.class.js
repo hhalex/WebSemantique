@@ -1,4 +1,5 @@
 function Album(el, res) {
+    var stillInDOM = true;
     var num = el;
     var artist = {name:res[el].ArtistName, uri:''};
     var name = res[el].albumName;
@@ -12,7 +13,7 @@ function Album(el, res) {
     }
     this.generateHTML = function(){
         var containing_div = $('<div />').addClass('place_holder');
-        var album_div = $('<div />').addClass('album');
+        var album_div = $('<div />').addClass('album').hide();
         var a_album_div = $('<a />', {href: '#'})
                 .addClass('close')
                 .addClass('secret');
@@ -47,11 +48,16 @@ function Album(el, res) {
     };
 
     this.getDOMElement = function() {
-        return $("img[data-id='"+el+"']");
+        return $("img[data-id='"+num+"']");
     };
 
     this.removeDOMElement = function () {
-        self.getDOMElement().parent(".place_holder").remove();
+        if (stillInDOM){
+          alert(num);
+          var tmp = self.getDOMElement().parent(".place_holder")
+            tmp.remove();
+            stillInDOM=false;
+        }
     };
 
     this.callbackUpdateCover = function(data) {
@@ -61,11 +67,19 @@ function Album(el, res) {
         {
             AlbumsData[data.data['0'].id] = data.data['0'];
 
-            if (data.data['0'].cover_medium)
-                myelement.attr("src", data.data['0'].cover_medium);
+            if (data.data['0'].cover_medium){
+              var tmpImg = new Image() ;
+              tmpImg.src = data.data['0'].cover_medium ;
+              tmpImg.onload = function() {
+                // Run onload code.
+                myelement.attr("src", tmpImg.src );
+                myelement.parent(".album").fadeIn(2000);
+              } ;
+            }
 
         }
         else self.removeDOMElement();
+        self.removeDOMElement();
         return false;
     };
 
@@ -74,13 +88,13 @@ function Album(el, res) {
 
         if(data.length > 0){
             var ul = $("<ul>");
-            for ( el in data)
+            for ( el_ in data)
             {
-                if ('track' in data[el]){
+                if ('track' in data[el_]){
                     var li = $("<li>");
                     var a = $("<a>");
-                    a.attr("href", data[el].track.uri);
-                    a.text(data[el].name);
+                    a.attr("href", data[el_].track.uri);
+                    a.text(data[el_].name);
                     li.append(a);
                     ul.append(li);
                 }
