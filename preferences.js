@@ -51,6 +51,8 @@ function open() {
     display: 'block',
     color: 'white',
     boxShadow: "0px 0px 0px #000000",
+    width: '600px',
+    height: 'auto',
     zIndex:'9999'
   });
 
@@ -78,8 +80,8 @@ function open() {
 
   $(this).stop().animate({
     paddingRight: '10px',
-
-    width: '440px',
+    width: '600px',
+    height: 'auto',
     left :'50%',
     top: '50%',
     marginTop: '-200px',
@@ -124,6 +126,45 @@ function close () {
   return false;
 }
 
+// fonction qui sert à rajouter une track dans le cookie
+// avec les track likées par la personne
+
+function addToLikeList(track)
+{
+  var cookie = [];
+
+  if (typeof Cookies.get('likes') != 'undefined') {
+    // si il y a des déjà des choses likées
+    var cookie = JSON.parse(Cookies.get('likes'));
+  }
+
+  cookie.push(track);
+  Cookies.set('likes', cookie);
+}
+
+// fonction qui sert à get les track qui ont été likées
+// dans le passé
+function getLikeList()
+{
+    if (typeof Cookies.get('likes') != 'undefined') {
+      console.log(Cookies.get('likes'));
+    }
+    else {
+      console.log('no liked tracks were found');
+    }
+}
+
+// fonction qui sert à remove une track
+// directement avec l'id dans l'array
+
+function removeInLikeList(id)
+{
+  if (typeof Cookies.get('likes') != 'undefined') {
+      var cookie = JSON.parse(Cookies.get('likes'));
+      cookie.splice(id, 1);
+      Cookies.set('likes', cookie);
+  }
+}
 
 $(document).ready(function(){
 
