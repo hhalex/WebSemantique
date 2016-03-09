@@ -2,6 +2,7 @@ node_modules
 *.log
 data
 lib/*
+!lib/js.cookie.js
 !lib/jquery.sparql.js
 !lib/urlEncode.js
 !lib/jquery.awesome.min.js
