@@ -13,7 +13,7 @@ function Album(el, res) {
     }
     this.generateHTML = function(){
         var containing_div = $('<div />').addClass('place_holder');
-        var album_div = $('<div />').addClass('album').hide();
+        var album_div = $('<div />').addClass('album');
         var a_album_div = $('<a />', {href: '#'})
                 .addClass('close')
                 .addClass('secret');
@@ -23,7 +23,7 @@ function Album(el, res) {
                                  alt: 'Fermer'})
                 .addClass('btn_close');
         var cover_img = $('<img />',
-                          {src:'http://static.tumblr.com/2lqtwbf/coolyqooj/untitled-1.png',
+                          {src:'http://www.wargamevault.com/shared_images/ajax-loader.gif',
                            alt: 'album_cover',
                            'data-id': el})
                 .addClass('cover');
@@ -59,6 +59,8 @@ function Album(el, res) {
         }
     };
 
+
+
     this.callbackUpdateCover = function(data) {
         var myelement=self.getDOMElement();
 
@@ -71,8 +73,8 @@ function Album(el, res) {
               tmpImg.src = data.data['0'].cover_medium ;
               tmpImg.onload = function() {
                 // Run onload code.
-                myelement.attr("src", tmpImg.src );
-                myelement.parent(".album").fadeIn(2000);
+            //    myelement.attr("src", tmpImg.src );
+                myelement.parent(".album").fadeOut(1000, function() { myelement.attr("src", tmpImg.src ); myelement.parent(".album").fadeIn(2000); });
               } ;
             }
 

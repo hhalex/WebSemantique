@@ -33,10 +33,15 @@ body {
 
  .list{
    margin-top:25px;
-   width:200px;
+   width:auto;
+   max-width: 300px;
    float:left;
    vertical-align:top;
    margin-left:10px;
+ }
+
+ .list ul{
+   list-style-type: none;
  }
 .album {
   width: 220px;

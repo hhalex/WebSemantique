@@ -58,7 +58,6 @@ $(document).ready(function () {
                               output: 'jsonp'
                             },
                             success: currentAlbum.callbackUpdateCover,
-
                             url:'https://api.deezer.com/search/album/'
                           });
 
