@@ -56,14 +56,17 @@ requetesSparql = {
             .prefix('onto', 'http://dbpedia.org/ontology/')
             .prefix('prop', 'http://dbpedia.org/property/')
             .prefix('rdfs','http://www.w3.org/2000/01/rdf-schema#')
-            .select(["?track", "?name", "?releaseDate"])
+            .select(["?track", "?name", "?releaseDate", "?artist", "?artistName"])
 
             .where("?track",
                    "<http://dbpedia.org/property/album>",
                    "<"+albumUri+">")
             .where("?track","rdfs:label","?name")
             .where("?track", "onto:releaseDate", "?releaseDate")
-            .filter("lang(?name) = 'en'")
+            .where("?track", "onto:artist", "?artist")
+            .where("?artist", "rdfs:label", "?artistName")
+            .filter("lang(?name) = 'en' && lang(?artistName) = 'en'")
+            .groupby("?name")
             .limit(100);
     }
 };
