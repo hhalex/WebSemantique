@@ -83,8 +83,7 @@ function open() {
     left :'50%',
     top: '50%',
     marginTop: '-200px',
-    marginLeft: '-220px',
-
+    marginLeft: '-220px'
 
   },function(){
 
