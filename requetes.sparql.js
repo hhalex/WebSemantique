@@ -19,7 +19,7 @@ requetesSparql = {
       //    .where("?album","prop:genre","?genre")
       //    .where("?album","rdfs:label","?album_name")
           .filter("xsd:integer(?year) >= 1980")
-          .filter("lang(?label) = 'fr'")
+          .filter("lang(?label) = 'en'")
 
         //    .distinct("?album")
             .distinct("?genre")
@@ -53,14 +53,16 @@ requetesSparql = {
     tracks: function(albumUri) {
 
         return $.sparql("http://dbpedia.org/sparql")
-
+            .prefix('onto', 'http://dbpedia.org/ontology/')
+            .prefix('prop', 'http://dbpedia.org/property/')
             .prefix('rdfs','http://www.w3.org/2000/01/rdf-schema#')
-            .select(["?track", "?name"])
+            .select(["?track", "?name", "?releaseDate"])
 
             .where("?track",
                    "<http://dbpedia.org/property/album>",
                    "<"+albumUri+">")
             .where("?track","rdfs:label","?name")
+            .where("?track", "onto:releaseDate", "?releaseDate")
             .filter("lang(?name) = 'en'")
             .limit(100);
     }
