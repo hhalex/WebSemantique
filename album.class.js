@@ -53,8 +53,7 @@ function Album(el, res) {
 
     this.removeDOMElement = function () {
         if (stillInDOM){
-          alert(num);
-          var tmp = self.getDOMElement().parent(".place_holder")
+          var tmp = self.getDOMElement().parent().parent();
             tmp.remove();
             stillInDOM=false;
         }
@@ -79,7 +78,7 @@ function Album(el, res) {
 
         }
         else self.removeDOMElement();
-        self.removeDOMElement();
+
         return false;
     };
 
