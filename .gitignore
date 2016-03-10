@@ -8,4 +8,6 @@ lib/*
 !lib/jquery.awesome.min.js
 !lib/featherlight.css
 !lib/featherlight.js
+!lib/jqcloud.js
+!lib/jqcloud.css
 .DS_Store
