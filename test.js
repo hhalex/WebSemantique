@@ -16,7 +16,8 @@ requetesSparql['albums'](the_genre)
       var i=0;
       for (el in res)
       {
-          var currentAlbum = new Album(el, res);
+          var currentAlbum = new Album();
+          currentAlbum.init_from_dbpedia(el, res);
           $('#mylightbox').append(currentAlbum.generateHTML());
 
           // Récupération sparql des pistes
