@@ -97,6 +97,8 @@ function Album(el, res) {
                 //    a.attr("href", data[el_].track.uri);
                     li.text(data[el_].name);
                     li.attr('data-uri', data[el_].track.uri);
+                    li.attr('data-releasedate', data[el_].releaseDate);
+                    li.attr('data-name', data[el_].name);
                   //  li.append();
                     ul.append(li);
                 }

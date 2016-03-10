@@ -30,6 +30,8 @@ $(document).ready(function () {
 
             $('#wordcloud2 a').on('click', function() {
 
+                $('#loader').show();
+
                 var the_genre = $(this).data('uri');
                 $('#mylightbox').empty();
                 console.log(the_genre);
@@ -65,6 +67,7 @@ $(document).ready(function () {
                       }
 
                       $('#receiver').trigger('click');
+                      $('#loader').hide();
 
                       return false;
 
@@ -77,6 +80,7 @@ $(document).ready(function () {
             });
 
             $('#receiver').featherlight($('#mylightbox'));
+
 
             return false;
         });

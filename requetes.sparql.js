@@ -24,7 +24,7 @@ requetesSparql = {
         //    .distinct("?album")
             .distinct("?genre")
           .orderby("DESC(?popucalcul)")
-          .limit(30);
+          .limit(20);
           //.select(["?genre"])
          // .where('?genre', 'a', 'onto:MusicGenre')
     },
@@ -46,7 +46,7 @@ requetesSparql = {
             //.where("?album", "prop:cover", "?albumCover")
             .filter("lang(?albumName) = 'en' && lang(?ArtistName) = 'en'")
             .orderby("DESC(?popucalcul)")
-            .limit(100)
+            .limit(300)
             .groupby("?albumName");
     },
 

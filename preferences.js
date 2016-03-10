@@ -33,7 +33,7 @@ function selectTrack(){
     $(this).addClass("selected");
     $(this).append(v);
 
-    addToLikeList($(this).attr('data-uri'));
+    addToLikeList($(this).attr('data-uri'), {releasedate: $(this).attr('data-releasedate'), name: $(this).attr('data-name')});
   }
 }
 function open() {
@@ -129,7 +129,7 @@ function close () {
 // fonction qui sert à rajouter une track dans le cookie
 // avec les track likées par la personne
 
-function addToLikeList(track)
+function addToLikeList(track, params)
 {
   var cookie = {};
 
@@ -138,7 +138,7 @@ function addToLikeList(track)
     var cookie = JSON.parse(Cookies.get('likes'));
   }
 
-  cookie[track] = 1;
+  cookie[track] = params;
   Cookies.set('likes', cookie);
 }
 
@@ -147,10 +147,11 @@ function addToLikeList(track)
 function getLikeList()
 {
     if (typeof Cookies.get('likes') != 'undefined') {
-      console.log(Cookies.get('likes'));
+      return JSON.parse(Cookies.get('likes'));
     }
     else {
       console.log('no liked tracks were found');
+      return {};
     }
 }
 
@@ -170,12 +171,44 @@ function removeInLikeList(track)
   }
 }
 
+/* Display tastes of the user based on the data contained on the cookie */
+
+function displayLikes()
+{
+
+  $('a.remove_from_tastes').off('click');
+  $('#tastes').empty();
+
+  var likes = getLikeList();
+  for (el in likes)
+  {
+    var li = $('<li />');
+    var a = $('<a />');
+    a.addClass('remove_from_tastes');
+    a.attr('data-uri', el);
+    a.text('Remove');
+    li.text(likes[el].name).append(a);
+    $('#tastes').append(li);
+  }
+
+  $('a.remove_from_tastes').on('click', function() {
+    removeInLikeList($(this).data('uri'));
+    $(this).parent().fadeOut(1000);
+  });
+
+}
+
 $(document).ready(function(){
 
 
   $(".lightbox").on('click', '.album', open);
   $(".lightbox").on('mouseover', '.cover', hoverCover);
   $(".lightbox").on('mouseout', '.cover', leaveCover);
+
+  displayLikes();
+
+  $.featherlight.defaults.afterClose = function() { displayLikes(); };
+
 
 
 });
