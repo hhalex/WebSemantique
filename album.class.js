@@ -1,13 +1,28 @@
-function Album(el, res) {
-    var stillInDOM = true;
-    var num = el;
-    var artist = {name:res[el].ArtistName, uri:''};
-    var name = res[el].albumName;
-    console.log(res[el].album)
-    var uri='';
+function Album() {
+
+  var stillInDOM = true;
+  var num;
+  var artist;
+  var name;
+  //console.log(res[el].album)
+  var uri;
+  var self = this;
+
+    this.init_from_dbpedia = function (el, res) {
+    num = el;
+    artist = {name:res[el].ArtistName, uri:''};
+    name = res[el].albumName;
+    //console.log(res[el].album)
+    uri = '';
     if(typeof res[el].album != 'undefined')
       uri = res[el].album.uri
-    var self = this;
+  };
+
+    this.init_from_jamendo = function  (a,b)
+  {
+
+  };
+
     this.getURI = function () {
       return uri;
     }
