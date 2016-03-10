@@ -209,6 +209,4 @@ $(document).ready(function(){
 
   $.featherlight.defaults.afterClose = function() { displayLikes(); };
 
-
-
 });

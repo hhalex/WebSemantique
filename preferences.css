@@ -1,9 +1,5 @@
 
 
-body {
-  background-image:url(background.jpeg);
-}
-
 .container{
   max-width:1350px;
   margin:auto;
@@ -113,4 +109,8 @@ body {
 .close {
 	float: right;
 
+}
+
+#wordscloud span{
+  cursor:pointer;
 }

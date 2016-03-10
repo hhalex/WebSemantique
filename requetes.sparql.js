@@ -24,7 +24,7 @@ requetesSparql = {
         //    .distinct("?album")
             .distinct("?genre")
           .orderby("DESC(?popucalcul)")
-          .limit(20);
+          .limit(50);
           //.select(["?genre"])
          // .where('?genre', 'a', 'onto:MusicGenre')
     },

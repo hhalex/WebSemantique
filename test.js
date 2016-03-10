@@ -1,5 +1,54 @@
 var ImgCallbacks=[]
 var AlbumsData={};
+var wordsToDisplay=[];
+
+var listenerOnClickWordCloud = function() {
+
+$('#loader').show();
+//  console.log($(this));
+var the_genre = $(this).data('uri');
+$('#mylightbox').empty();
+console.log(the_genre);
+
+requetesSparql['albums'](the_genre)
+    .execute(function(res)
+    {
+      var i=0;
+      for (el in res)
+      {
+          var currentAlbum = new Album(el, res);
+          $('#mylightbox').append(currentAlbum.generateHTML());
+
+          // Récupération sparql des pistes
+          if (typeof res[el].album != 'undefined')
+                requetesSparql['tracks'](currentAlbum.getURI()).execute(currentAlbum.callbackUpdateTracks);
+
+          // Opération Jaquette
+          $.ajax({
+            type: 'GET',
+            dataType: 'jsonp',
+            data:{
+              q: res[el].albumName,
+              index:'0',
+              limit:'1',
+              output: 'jsonp'
+            },
+            success: currentAlbum.callbackUpdateCover,
+            url:'https://api.deezer.com/search/album/'
+          });
+
+          i++;
+      }
+
+      $('#receiver').trigger('click');
+      $('#loader').hide();
+
+      return false;
+
+    });
+
+  };
+
 
 $(document).ready(function () {
     $("#list").empty();
@@ -10,21 +59,37 @@ $(document).ready(function () {
             {
                 if ('genre' in res[el])
                 {
-                  var dataweight = parseInt((parseInt(res[el].year)-1980)*(1+Math.random()));
+                  var dataweight = parseInt(res[el].popucalcul);
 
                   //data-featherlight
-                  var li = $('<li />');
-                  var a = $('<a />', {href: '#'});
+            //      var li = $('<li />');
+          //        var a = $('<a />', {href: '#'});
                 //  var a = $('<a />', {href: res[el].genre.uri});
-                  a.text(res[el].label.replace('&', 'n'));
-                  a.data('featherlight', '#mylightbox');
-                  a.data('genre', res[el].label.replace('&', 'n'));
-                  a.data('uri', res[el].genre.uri);
-                  li.append(a);
-                  ul.append(li);
+            //      a.text(res[el].label.replace('&', 'n'));
+                //  a.data('featherlight', '#mylightbox');
+              //    a.data('genre', res[el].label.replace('&', 'n'));
+              //    a.data('uri', res[el].genre.uri);
+          //       li.append(a);
+          //        ul.append(li);
+
+                  var wordToDisplay = {};
+                  wordToDisplay.text = res[el].label.replace('&', 'n');
+                  wordToDisplay.weight = dataweight;
+                  wordToDisplay.handlers = {};
+                  wordToDisplay.html = {
+                    'data-genre': res[el].label.replace('&', 'n'),
+                    'data-uri': res[el].genre.uri
+                  };
+                  wordToDisplay.handlers.click = listenerOnClickWordCloud;
+
+                  wordsToDisplay.push(wordToDisplay);
                   //$('#wordcloud2').append(element);
                 }
             }
+
+            $("#wordscloud").jQCloud(wordsToDisplay, {
+                height: 400
+            });
 
             $('#wordcloud2').empty().append(ul);
 
