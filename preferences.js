@@ -198,6 +198,23 @@ function displayLikes()
 
 }
 
+/* Display the recommendations */
+
+function displayRecommendations()
+{
+  var the_length = 8;
+  requetesSparql['recommandation-jamendo'](the_length)
+      .execute(function(res)
+      {
+        for (el in res)
+        {
+          var album = new Album();
+          album.init_from_jamendo(el, res);
+          $('#recommendations').append(album.generateHTML());
+        }
+      });
+}
+
 $(document).ready(function(){
 
 
@@ -208,5 +225,7 @@ $(document).ready(function(){
   displayLikes();
 
   $.featherlight.defaults.afterClose = function() { displayLikes(); };
+
+  displayRecommendations();
 
 });

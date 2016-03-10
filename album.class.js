@@ -7,6 +7,7 @@ function Album() {
   //console.log(res[el].album)
   var uri;
   var self = this;
+  var coverImage = 'http://www.wargamevault.com/shared_images/ajax-loader.gif';
 
     this.init_from_dbpedia = function (el, res) {
     num = el;
@@ -18,9 +19,10 @@ function Album() {
       uri = res[el].album.uri
   };
 
-    this.init_from_jamendo = function  (a,b)
+    this.init_from_jamendo = function  (el, res)
   {
-
+  //  coverImage = '';
+  // artist = {name : ''};
   };
 
     this.getURI = function () {
@@ -38,7 +40,7 @@ function Album() {
                                  alt: 'Fermer'})
                 .addClass('btn_close');
         var cover_img = $('<img />',
-                          {src:'http://www.wargamevault.com/shared_images/ajax-loader.gif',
+                          {src:coverImage,
                            alt: 'album_cover',
                            'data-id': el})
                 .addClass('cover');
