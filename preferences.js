@@ -228,4 +228,5 @@ $(document).ready(function(){
 
   displayRecommendations();
 
+
 });

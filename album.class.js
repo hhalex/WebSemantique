@@ -69,16 +69,39 @@ function Album() {
     };
 
     this.removeDOMElement = function () {
-        if (stillInDOM){
+       if (stillInDOM){
           var tmp = self.getDOMElement().parent().parent();
             tmp.remove();
             stillInDOM=false;
         }
+        console.log('removed');
     };
 
 
+    this.callbackUpdateCoverFromWiki = function (data) {
 
-    this.callbackUpdateCover = function(data) {
+        if (typeof data.query.pages[Object.keys(data.query.pages)[0]].thumbnail != 'undefined')
+        {
+          var cover_img = data.query.pages[Object.keys(data.query.pages)[0]].thumbnail.source;
+          var myelement=self.getDOMElement();
+
+          var tmpImg = new Image() ;
+          tmpImg.src = cover_img;
+          tmpImg.onload = function() {
+            myelement.parent(".album").fadeOut(1000, function() { myelement.attr("src", tmpImg.src ); myelement.parent(".album").fadeIn(2000); });
+          } ;
+      }
+      else {
+        //  var cover_img = 'http://media.tumblr.com/tumblr_mf3r1eERKE1qgcb9y.jpg';
+        self.removeDOMElement();
+      }
+
+
+
+
+    };
+
+  /*  this.callbackUpdateCover = function(data) {
         var myelement=self.getDOMElement();
 
         if (data.total > 0)
@@ -99,7 +122,7 @@ function Album() {
         else self.removeDOMElement();
 
         return false;
-    };
+    };*/
 
     this.callbackUpdateTracks = function(data) {
         var myelement=self.getDOMElement().parent(".album").find(".list");
@@ -122,8 +145,10 @@ function Album() {
             }
             myelement.append(ul);
         }
-        else
-            self.removeDOMElement();
+       else
+       {
+        //    self.removeDOMElement();
+      }
         return false;
     };
 }

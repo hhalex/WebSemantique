@@ -20,23 +20,12 @@ requetesSparql['albums'](the_genre)
           currentAlbum.init_from_dbpedia(el, res);
           $('#mylightbox').append(currentAlbum.generateHTML());
 
+          // Récupération de la Jaquette
+          $.getJSON("https://en.wikipedia.org/w/api.php?action=query&titles=File:"+res[el].cover+"&prop=pageimages&format=json&pithumbsize=300&callback=?", currentAlbum.callbackUpdateCoverFromWiki);
+
           // Récupération sparql des pistes
           if (typeof res[el].album != 'undefined')
                 requetesSparql['tracks'](currentAlbum.getURI()).execute(currentAlbum.callbackUpdateTracks);
-
-          // Opération Jaquette
-          $.ajax({
-            type: 'GET',
-            dataType: 'jsonp',
-            data:{
-              q: res[el].albumName,
-              index:'0',
-              limit:'1',
-              output: 'jsonp'
-            },
-            success: currentAlbum.callbackUpdateCover,
-            url:'https://api.deezer.com/search/album/'
-          });
 
           i++;
       }

@@ -36,17 +36,18 @@ requetesSparql = {
             .prefix('res', 'http://dbpedia.org/resource/')
             .prefix('page', 'http://dbpedia.org/page/')
             .prefix('rdfs','http://www.w3.org/2000/01/rdf-schema#')
-            .select(["?album", "?Artist", "?ArtistName", "?albumName", "COUNT(?track) AS ?popucalcul"])
+            .select(["?album", "?Artist", "?ArtistName", "?cover", "?albumName", "COUNT(?track) AS ?popucalcul"])
             .where("?album","a","onto:Album")
             .where("?album","rdfs:label","?albumName")
             .where("?album","onto:artist","?Artist")
             .where("?album","onto:genre","<"+the_genre+">")
             .where("?track", "prop:album", "?album")
+            .where("?album", "prop:cover", "?cover")
             .where("?Artist", "rdfs:label", "?ArtistName")
             //.where("?album", "prop:cover", "?albumCover")
             .filter("lang(?albumName) = 'en' && lang(?ArtistName) = 'en'")
             .orderby("DESC(?popucalcul)")
-            .limit(100)
+            .limit(300)
             .groupby("?albumName");
     },
 
@@ -77,14 +78,15 @@ requetesSparql = {
             .prefix('mo','http://purl.org/ontology/mo/')
             .prefix('rdfs','http://www.w3.org/2000/01/rdf-schema#')
             .prefix('foaf','http://xmlns.com/foaf/0.1/')
-            .select(["?record", "?recordName", "?artist", "?artistName", "len(?recordName) As ?length"])
+            .prefix('fn', 'http://www.w3c.org/2005/xpath-functions#')
+            .select(["?record", "?recordName", "?artist", "?artistName"])
 
             .where("?artist", "a", "mo:MusicArtist")
             .where("?artist", "foaf:name", "?artistName")
             .where("?artist", "foaf:made", "?record")
             .where("?artist", "foaf:img", "?cover")
             .where("?record", "foaf:name", "?recordName")
-            .filter("len(?recordName) +2 > ?length && len(?recordName) - 2 < len(?recordName)")
+          //  .filter("fn:string-length(?recordName) +2 > ?length && fn:string-length(?recordName) - 2 < fn:string-length(?recordName)")
           //.where("?artist", "foaf:based_near", "?place")
 
             .limit(100);
