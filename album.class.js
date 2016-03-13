@@ -21,6 +21,7 @@ function Album() {
 
     this.init_from_jamendo = function  (el, res)
   {
+    name = res[el].name;
     num = el;
     if(res[el].cover)
       coverImage = res[el].cover.uri;
@@ -29,6 +30,9 @@ function Album() {
 
     this.getURI = function () {
       return uri;
+    }
+    this.getDescription = function(){
+      return name;
     }
     this.generateHTML = function(){
         var containing_div = $('<div />').addClass('place_holder');

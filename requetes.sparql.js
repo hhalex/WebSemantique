@@ -68,7 +68,7 @@ requetesSparql = {
             .where("?track", "onto:artist", "?artist")
             .where("?artist", "rdfs:label", "?artistName")
           //.where("?artist", "foaf:based_near", "?place")
-            .filter("lang(?artistName) = 'en'")
+            .filter("lang(?name) = 'en'")
             .groupby("?track")
             .limit(100);
     },
@@ -88,9 +88,27 @@ requetesSparql = {
             .where("?artist", "foaf:img", "?cover")
             //.where("?record", "foaf:name", "?recordName")
 
-            .filter("strlen(?artistName) + 2 >= "+length) //" && op:numeric-less-than( op:numeric-subtract(fn:string-length(?recordName), xs:integer(2)), "+length+")")
-          //.where("?artist", "foaf:based_near", "?place")
+            .filter("strlen(?artistName) + 2 >= "+length)
             .groupby("?artist")
-            .limit(100);
+            .limit(10);
+    },
+    'recommandation-dbpedia': function(name, releaseDate) {
+
+        return  $.sparql("http://dbpedia.org/sparql")
+            .prefix('onto', 'http://dbpedia.org/ontology/')
+            .prefix('prop', 'http://dbpedia.org/property/')
+            .prefix('res', 'http://dbpedia.org/resource/')
+            .prefix('page', 'http://dbpedia.org/page/')
+            .prefix('rdfs','http://www.w3.org/2000/01/rdf-schema#')
+            .select(["?album", "?albumName", "?track", "?trackName"])
+            .where("?album","a","onto:Album")
+            .where("?album","rdfs:label","?albumName")
+          .where("?track", "prop:album", "?album")
+          .where("?track", "rdfs:label", "?trackName")
+          .where("?track", "onto:releaseDate", "?releaseDate")
+          //.where("?album", "prop:cover", "?albumCover")
+          .filter("lang(?trackName) = 'en' && lang(?albumName) = 'en' && xsd:dateTime(?releaseDate) >= '"+releaseDate+"'^^xsd:dateTime")
+          .limit(50)
+          .groupby("?trackName");
     }
 };

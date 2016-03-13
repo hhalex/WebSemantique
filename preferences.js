@@ -200,6 +200,42 @@ function displayRecommendations()
       });
 }
 
+function displayRecommendationsDBPedia()
+{
+  var tracks = JSON.parse(Cookies.get('likes'));
+  var uris = Object.keys(tracks);
+  var name;
+  var releaseDate;
+
+  for (t in tracks){
+
+    name = tracks[t].name;
+    releaseDate = tracks[t].releasedate;
+    console.log(releaseDate);
+    console.log(name);
+    break;
+  }
+  console.log(uris[0]);
+  requetesSparql['recommandation-dbpedia'](name, releaseDate)
+      .execute(function(res)
+      {
+        console.log(res);
+        var table = $("<table>");
+        table.addClass("table").addClass("table-hover");
+        for (el in res)
+        {
+          var album = new Album();
+          album.init_from_dbpedia(el, res);
+          var tr = $('<tr>');
+          var td = $('<td>');
+          tr.append(td);
+          td.append(album.getDescription());
+          table.append(tr);
+        }
+        $('#recommendations-dbpedia').append(table);
+      });
+}
+
 $(document).ready(function(){
 
 
@@ -213,5 +249,6 @@ $(document).ready(function(){
 
   displayRecommendations();
 
+displayRecommendationsDBPedia();
 
 });
