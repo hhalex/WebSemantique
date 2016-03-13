@@ -68,8 +68,8 @@ requetesSparql = {
             .where("?track", "onto:artist", "?artist")
             .where("?artist", "rdfs:label", "?artistName")
           //.where("?artist", "foaf:based_near", "?place")
-            .filter("lang(?name) = 'en' && lang(?artistName) = 'en'")
-            .groupby("?name")
+            .filter("lang(?artistName) = 'en'")
+            .groupby("?track")
             .limit(100);
     },
     'recommandation-jamendo': function(length) {
@@ -80,7 +80,6 @@ requetesSparql = {
             .prefix('foaf','http://xmlns.com/foaf/0.1/')
             .prefix('xs', 'http://www.w3.org/2001/XMLSchema')
             .prefix('fn', 'http://www.w3c.org/2005/xpath-functions#')
-            //.select(["?record", "?recordName", "?artist", "?artistName"])
             .select(["distinct(?artist)", "?artistName", "?cover"])
             .where("?artist", "a", "mo:MusicArtist")
 
@@ -89,7 +88,7 @@ requetesSparql = {
             .where("?artist", "foaf:img", "?cover")
             //.where("?record", "foaf:name", "?recordName")
 
-            .filter("op:numeric-greater-than(op:numeric-add(fn:string-length(?artistName), xs:integer(2)),  "+length+")")//" && op:numeric-less-than( op:numeric-subtract(fn:string-length(?recordName), xs:integer(2)), "+length+")")
+            .filter("strlen(?artistName) + 2 >= "+length) //" && op:numeric-less-than( op:numeric-subtract(fn:string-length(?recordName), xs:integer(2)), "+length+")")
           //.where("?artist", "foaf:based_near", "?place")
             .groupby("?artist")
             .limit(100);

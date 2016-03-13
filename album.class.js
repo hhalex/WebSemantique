@@ -128,29 +128,32 @@ function Album() {
 
     this.callbackUpdateTracks = function(data) {
         var myelement=self.getDOMElement().parent(".album").find(".list");
-
+        var tracks_uniq = {}
         if(data.length > 0){
             var ul = $("<ul>");
             for ( el_ in data)
             {
-                if ('track' in data[el_]){
-                    var li = $("<li>");
-                //    var a = $("<a>");
-                //    a.attr("href", data[el_].track.uri);
-                    li.text(data[el_].name);
-                    li.attr('data-uri', data[el_].track.uri);
-                    li.attr('data-releasedate', data[el_].releaseDate);
-                    li.attr('data-name', data[el_].name);
-                  //  li.append();
-                    ul.append(li);
-                }
+                if ('track' in data[el_])
+                  tracks_uniq[data[el_].track.uri] = data[el_];
+            }
+            if(Object.keys(tracks_uniq).length == 0)
+            {
+                self.removeDOMElement();
+               return false;
+            }
+            for (one_track in tracks_uniq)
+            {
+              var li = $("<li>");
+              li.text(tracks_uniq[one_track].name);
+              li.attr('data-uri', tracks_uniq[one_track].track.uri);
+              li.attr('data-releasedate', tracks_uniq[one_track].releaseDate);
+              li.attr('data-name', tracks_uniq[one_track].name);
+              ul.append(li);
             }
             myelement.append(ul);
         }
        else
-       {
-        //    self.removeDOMElement();
-      }
+           self.removeDOMElement();
         return false;
     };
 }
