@@ -149,7 +149,7 @@ function Album() {
         }
        else
        {
-        //    self.removeDOMElement();
+            self.removeDOMElement();
       }
         return false;
     };
