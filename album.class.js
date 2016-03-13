@@ -9,7 +9,7 @@ function Album() {
   var self = this;
   var coverImage = 'http://www.wargamevault.com/shared_images/ajax-loader.gif';
 
-    this.init_from_dbpedia = function (el, res) {
+  this.init_from_dbpedia = function (el, res) {
     num = el;
     artist = {name:res[el].ArtistName, uri:''};
     name = res[el].albumName;
@@ -21,8 +21,10 @@ function Album() {
 
     this.init_from_jamendo = function  (el, res)
   {
-  //  coverImage = '';
-  // artist = {name : ''};
+    num = el;
+    if(res[el].cover)
+      coverImage = res[el].cover.uri;
+      artist = {name : res[el].artistName};
   };
 
     this.getURI = function () {

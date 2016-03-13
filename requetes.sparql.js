@@ -74,21 +74,24 @@ requetesSparql = {
     },
     'recommandation-jamendo': function(length) {
 
-        return $.sparql("http://localhost:8890/sparql")
+        return $.sparql("http://localhost:8890/sparql", {localhost:true})
             .prefix('mo','http://purl.org/ontology/mo/')
             .prefix('rdfs','http://www.w3.org/2000/01/rdf-schema#')
             .prefix('foaf','http://xmlns.com/foaf/0.1/')
+            .prefix('xs', 'http://www.w3.org/2001/XMLSchema')
             .prefix('fn', 'http://www.w3c.org/2005/xpath-functions#')
-            .select(["?record", "?recordName", "?artist", "?artistName"])
-
+            //.select(["?record", "?recordName", "?artist", "?artistName"])
+            .select(["distinct(?artist)", "?artistName", "?cover"])
             .where("?artist", "a", "mo:MusicArtist")
-            .where("?artist", "foaf:name", "?artistName")
-            .where("?artist", "foaf:made", "?record")
-            .where("?artist", "foaf:img", "?cover")
-            .where("?record", "foaf:name", "?recordName")
-          //  .filter("fn:string-length(?recordName) +2 > ?length && fn:string-length(?recordName) - 2 < fn:string-length(?recordName)")
-          //.where("?artist", "foaf:based_near", "?place")
 
+            .where("?artist", "foaf:name", "?artistName")
+            //.where("?artist", "foaf:made", "?record")
+            .where("?artist", "foaf:img", "?cover")
+            //.where("?record", "foaf:name", "?recordName")
+
+            .filter("op:numeric-greater-than(op:numeric-add(fn:string-length(?artistName), xs:integer(2)),  "+length+")")//" && op:numeric-less-than( op:numeric-subtract(fn:string-length(?recordName), xs:integer(2)), "+length+")")
+          //.where("?artist", "foaf:based_near", "?place")
+            .groupby("?artist")
             .limit(100);
     }
 };

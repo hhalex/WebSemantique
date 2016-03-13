@@ -91,24 +91,11 @@ function open() {
 
     $(this).find(".secret").show();
 
-
   });
-
-
-
-
-
-
-
   return false;
 }
 
 function close () {
-
-
-
-
-
 
   $(".secret").removeAttr("style");
   $(".cover").removeAttr("style");
@@ -119,9 +106,6 @@ function close () {
   $(".lightbox").on('mouseout', '.cover', leaveCover);
   $(".lightbox").off('click', '.close');
   $(".lightbox").off('click', 'li');
-
-
-
 
   return false;
 }
@@ -206,6 +190,7 @@ function displayRecommendations()
   requetesSparql['recommandation-jamendo'](the_length)
       .execute(function(res)
       {
+        console.log(res);
         for (el in res)
         {
           var album = new Album();
