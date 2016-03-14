@@ -33,7 +33,13 @@ function selectTrack(){
     $(this).addClass("selected");
     $(this).append(v);
 
-    addToLikeList($(this).attr('data-uri'), {releasedate: $(this).attr('data-releasedate'), name: $(this).attr('data-name')});
+    addToLikeList($(this).attr('data-uri'),
+    {
+      releasedate: $(this).attr('data-releasedate'),
+      name: $(this).attr('data-name'),
+      album: $(this).attr('data-album'),
+      genre: $(this).attr('data-genre')
+    });
   }
 }
 function open() {
@@ -163,21 +169,31 @@ function displayLikes()
   $('a.remove_from_tastes').off('click');
   $('#tastes').empty();
 
+var table = $('<table>');
+table.addClass("table").addClass("table-hover");
+
   var likes = getLikeList();
   for (el in likes)
   {
-    var li = $('<li />');
+    var tr = $('<tr>');
+    var td1 = $('<td>');
+    var td2 = $('<td>');
+
     var a = $('<a />');
+    //a.attr("href", "#");
     a.addClass('remove_from_tastes');
     a.attr('data-uri', el);
+    a.css("cursor", "pointer");
     a.text('Remove');
-    li.text(likes[el].name).append(a);
-    $('#tastes').append(li);
+    td1.text(likes[el].name);
+    td2.append(a);
+    tr.append(td1).append(td2);
+    table.append(tr);
   }
-
+  $('#tastes').append(table);
   $('a.remove_from_tastes').on('click', function() {
     removeInLikeList($(this).data('uri'));
-    $(this).parent().fadeOut(1000);
+    $(this).parent().parent().hide(500, function(){$(this).remove();});
   });
 
 }
@@ -204,28 +220,38 @@ function displayRecommendationsDBPedia()
 {
   var tracks = JSON.parse(Cookies.get('likes'));
   var uris = Object.keys(tracks);
-  var name;
-  var releaseDate;
+  var genre;
+  var countGenres= {};
+  var dates = [];
 
   for (t in tracks){
 
-    name = tracks[t].name;
+    genre = tracks[t].genre;
+    if (countGenres[genre]) countGenres[genre] += 1;
+    else countGenres[genre] = 1
     releaseDate = tracks[t].releasedate;
+    dates.push(new Date(releaseDate));
     console.log(releaseDate);
-    console.log(name);
-    break;
+    console.log(genre);
   }
-  console.log(uris[0]);
-  requetesSparql['recommandation-dbpedia'](name, releaseDate)
+  genre = Object.keys(countGenres).reduce(function(a, b){ return countGenres[a] > countGenres[b] ? a : b });
+  var maxDate=new Date(Math.max.apply(null,dates));
+  var minDate=new Date(Math.min.apply(null,dates));
+  requetesSparql['recommandation-dbpedia'](genre, minDate.toISOString(), maxDate.toISOString())
       .execute(function(res)
       {
         console.log(res);
         var table = $("<table>");
         table.addClass("table").addClass("table-hover");
+        var tracks={};
         for (el in res)
         {
+          if (res[el].track)
+          tracks[res[el].track.uri] = res[el];
+        }
+        for(t in tracks){
           var album = new Album();
-          album.init_from_dbpedia(el, res);
+          album.init_from_dbpedia(t, tracks);
           var tr = $('<tr>');
           var td = $('<td>');
           tr.append(td);

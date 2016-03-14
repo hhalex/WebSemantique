@@ -18,6 +18,7 @@ requetesSparql['albums'](the_genre)
       {
           var currentAlbum = new Album();
           currentAlbum.init_from_dbpedia(el, res);
+          currentAlbum.genre = the_genre;
           $('#mylightbox').append(currentAlbum.generateHTML());
 
           // Récupération de la Jaquette
@@ -50,17 +51,6 @@ $(document).ready(function () {
                 if ('genre' in res[el])
                 {
                   var dataweight = parseInt(res[el].popucalcul);
-
-                  //data-featherlight
-            //      var li = $('<li />');
-          //        var a = $('<a />', {href: '#'});
-                //  var a = $('<a />', {href: res[el].genre.uri});
-            //      a.text(res[el].label.replace('&', 'n'));
-                //  a.data('featherlight', '#mylightbox');
-              //    a.data('genre', res[el].label.replace('&', 'n'));
-              //    a.data('uri', res[el].genre.uri);
-          //       li.append(a);
-          //        ul.append(li);
 
                   var wordToDisplay = {};
                   wordToDisplay.text = res[el].label.replace('&', 'n');
@@ -97,7 +87,9 @@ $(document).ready(function () {
                       var i=0;
                       for (el in res)
                       {
-                          var currentAlbum = new Album(el, res);
+                          var currentAlbum = new Album();
+                          currentAlbum.init_from_dbpedia(el, res);
+                          currentAlbum.genre = the_genre;
                           $('#mylightbox').append(currentAlbum.generateHTML());
 
                           // Récupération sparql des pistes
@@ -128,14 +120,9 @@ $(document).ready(function () {
 
                     });
 
-                // TODO ajouter les albums issus de la requête sparql dans #mylightbox
-                // TODO permettre la sélection
-                // TODO retenir quelque part qu'est-ce-qui  a été sélectionné
-              //  $('#mylightbox').html('<strong>'+$(this).data('genre')+'</strong>');
             });
 
             $('#receiver').featherlight($('#mylightbox'));
-
 
             return false;
         });

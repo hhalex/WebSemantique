@@ -92,7 +92,7 @@ requetesSparql = {
             .groupby("?artist")
             .limit(10);
     },
-    'recommandation-dbpedia': function(name, releaseDate) {
+    'recommandation-dbpedia': function(genre, minDate, maxDate) {
 
         return  $.sparql("http://dbpedia.org/sparql")
             .prefix('onto', 'http://dbpedia.org/ontology/')
@@ -103,12 +103,13 @@ requetesSparql = {
             .select(["?album", "?albumName", "?track", "?trackName"])
             .where("?album","a","onto:Album")
             .where("?album","rdfs:label","?albumName")
+            .where("?album","onto:genre","<"+genre+">")
           .where("?track", "prop:album", "?album")
           .where("?track", "rdfs:label", "?trackName")
           .where("?track", "onto:releaseDate", "?releaseDate")
           //.where("?album", "prop:cover", "?albumCover")
-          .filter("lang(?trackName) = 'en' && lang(?albumName) = 'en' && xsd:dateTime(?releaseDate) >= '"+releaseDate+"'^^xsd:dateTime")
-          .limit(50)
+          .filter("lang(?trackName) = 'en' && lang(?albumName) = 'en' && xsd:dateTime(?releaseDate) >= '"+minDate+"'^^xsd:dateTime && xsd:dateTime(?releaseDate) <= '"+maxDate+"'^^xsd:dateTime")
+          .limit(20)
           .groupby("?trackName");
     }
 };

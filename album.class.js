@@ -3,12 +3,14 @@ function Album() {
   var stillInDOM = true;
   var num;
   var artist;
+  var genre;
   var name;
   //console.log(res[el].album)
   var uri;
   var self = this;
   var coverImage = 'http://www.wargamevault.com/shared_images/ajax-loader.gif';
 
+  this.genre='';
   this.init_from_dbpedia = function (el, res) {
     num = el;
     artist = {name:res[el].ArtistName, uri:''};
@@ -152,6 +154,8 @@ function Album() {
               li.attr('data-uri', tracks_uniq[one_track].track.uri);
               li.attr('data-releasedate', tracks_uniq[one_track].releaseDate);
               li.attr('data-name', tracks_uniq[one_track].name);
+              li.attr('data-genre', self.genre);
+              li.attr('data-album', uri);
               ul.append(li);
             }
             myelement.append(ul);
