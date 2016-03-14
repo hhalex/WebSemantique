@@ -218,6 +218,8 @@ function displayRecommendations()
 
 function displayRecommendationsDBPedia()
 {
+  // vide
+  $('#recommendations-dbpedia').empty();
   var tracks = JSON.parse(Cookies.get('likes'));
   var uris = Object.keys(tracks);
   var genre;
@@ -271,10 +273,10 @@ $(document).ready(function(){
 
   displayLikes();
 
-  $.featherlight.defaults.afterClose = function() { displayLikes(); };
+  $.featherlight.defaults.afterClose = function() { displayLikes(); displayRecommendationsDBPedia(); };
 
   displayRecommendations();
 
-displayRecommendationsDBPedia();
+  displayRecommendationsDBPedia();
 
 });
